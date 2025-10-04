@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+
+public enum Rarity { Common, Uncommon, Rare, UltraRare }
 
 public class CardPack : MonoBehaviour
 {
@@ -12,7 +15,15 @@ public class CardPack : MonoBehaviour
     private PackWrapper _packWrapper;
 
     [SerializeField]
-    private TradingCard _showcasingCard;    
+    private TradingCard _showcasingCard;
+
+    private TradingCard[] _cardComponents;
+
+    private List<TradingCardAttributes> _cardAttributes;
+
+    private float _uncommonPullChance = 0.30f;
+    private float _rarePullChance = 0.15f;
+    private float _ultraRarePullChance = 0.05f;
 
     private void Awake()
     {
@@ -21,11 +32,13 @@ public class CardPack : MonoBehaviour
         this._packWrapper = GetComponentInChildren<PackWrapper>();
         this._cards = new Queue<TradingCard>();
 
-        TradingCard[] cardComponents = GetComponentsInChildren<TradingCard>();
-        
-        for (int i = 0; i < cardComponents.Length; i++)
+        this._cardComponents = GetComponentsInChildren<TradingCard>();
+
+        this._cardAttributes = new List<TradingCardAttributes>();
+
+        for (int i = 0; i < this._cardComponents.Length; i++)
         { 
-            this._cards.Enqueue(cardComponents[i]);
+            this._cards.Enqueue(this._cardComponents[i]);
         }
     }
 
@@ -85,11 +98,74 @@ public class CardPack : MonoBehaviour
     }
 
     private void GeneratePack()
-    {    
-        TradingCard[] cardComponents = GetComponentsInChildren<TradingCard>();
-        for (int i = 0; i < cardComponents.Length; i++)
+    {
+        TradingCardAttributes newCard;
+    
+        for (int i = 0; i < this._cardComponents.Length; i++)
         {
-            cardComponents[i].GenerateCard();           
+            newCard = this.GenerateCard();
+
+            //Regenerate card if it is a duplicate
+            while (this.IsDuplicateCard(newCard, i) == true)
+            {
+                newCard = this.RerollDuplicate(newCard.rarity);
+            }
+
+            this._cardAttributes.Add(newCard);
         }
+
+        this._cardAttributes = this._cardAttributes.OrderBy(card => (int)card.rarity).ToList();
+
+        for (int i = 0; i < this._cardComponents.Length; i++)
+        {
+            this._cardComponents[i].SetupCard(this._cardAttributes[i]);
+        }
+    }
+
+    public TradingCardAttributes GenerateCard()
+    {
+        Rarity cardRarity = this.GenerateRarity();
+
+        return CardLibrary.GetRandomCard(cardRarity);
+    }
+
+    public TradingCardAttributes RerollDuplicate(Rarity rarity)
+    {
+        return CardLibrary.GetRandomCard(rarity);
+    }
+
+    private Rarity GenerateRarity()
+    {
+        float randomRoll = Random.Range(0.0f, 1.0f);
+
+        if (randomRoll <= this._ultraRarePullChance)
+        {
+            return Rarity.UltraRare;
+        }
+        else if (randomRoll <= this._rarePullChance)
+        {
+            return Rarity.Rare;
+        }
+        else if (randomRoll <= this._uncommonPullChance)
+        {
+            return Rarity.Uncommon;
+        }
+        else
+        {
+            return Rarity.Common;
+        }
+    }
+
+    private bool IsDuplicateCard(TradingCardAttributes currentCard, int currentIndex)
+    {
+        for (int i = 0; i < currentIndex; i++)
+        {
+            if (this._cardComponents[i].cardAttributes == currentCard)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

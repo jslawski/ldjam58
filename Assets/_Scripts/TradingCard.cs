@@ -6,8 +6,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public enum Rarity { Common, Uncommon, Rare, UltraRare }
-
 public class TradingCard : MonoBehaviour
 {
     private Transform _rootTransform;
@@ -40,9 +38,7 @@ public class TradingCard : MonoBehaviour
 
     private Tween _resetTween;
 
-    private float _uncommonPullChance = 0.35f;
-    private float _rarePullChance = 0.20f;
-    private float _ultraRarePullChance = 0.07f;
+    
 
     public TradingCardAttributes cardAttributes;
 
@@ -51,43 +47,16 @@ public class TradingCard : MonoBehaviour
         this._rootTransform = this.gameObject.transform;
     }
 
-    public void GenerateCard()
+    public void SetupCard(TradingCardAttributes cardAttributes)
     {
-        Rarity cardRarity = this.GenerateRarity();
-
-        this.cardAttributes = CardLibrary.GetRandomCard(cardRarity);
-
-        this.SetupCard();
-    }
-
-    private void SetupCard()
-    {
+        this.cardAttributes = cardAttributes;
+    
         this._cardRenderer.material = this.cardAttributes.cardMaterial;
         this._moneyValueLabel.text = this.cardAttributes.moneyValue.ToString();
         this._happyValueLabel.text = this.cardAttributes.happyValue.ToString();
     }
 
-    private Rarity GenerateRarity()
-    {
-        float randomRoll = Random.Range(0.0f, 1.0f);
-
-        if (randomRoll <= this._ultraRarePullChance)
-        {
-            return Rarity.UltraRare;
-        }
-        else if (randomRoll <= this._rarePullChance)
-        {
-            return Rarity.Rare;
-        }
-        else if (randomRoll <= this._uncommonPullChance)
-        {
-            return Rarity.Uncommon;
-        }
-        else
-        {
-            return Rarity.Common;
-        }
-    }
+    
 
     public void ShowcaseCard()
     {

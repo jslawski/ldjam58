@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class TradingCardAttributes : ScriptableObject
 {
+    public Rarity rarity;
     public Material cardMaterial;
     public int moneyValue;
     public int happyValue;
