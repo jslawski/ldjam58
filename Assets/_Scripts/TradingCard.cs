@@ -32,19 +32,15 @@ public class TradingCard : MonoBehaviour
     private Vector2 _maxRotationThresholds = new Vector3(15.0f, 7.0f);
 
     private bool _isShowcasing = false;
-    
-    private Ray _mouseRay;
-    private RaycastHit _hitInfo;
-
-    private Tween _resetTween;
-
-    
 
     public TradingCardAttributes cardAttributes;
+
+    private MouseLooker _mouseLooker;
 
     private void Awake()
     {
         this._rootTransform = this.gameObject.transform;
+        this._mouseLooker = GetComponent<MouseLooker>();
     }
 
     public void SetupCard(TradingCardAttributes cardAttributes)
@@ -88,52 +84,11 @@ public class TradingCard : MonoBehaviour
     {
         if (this._isShowcasing == true)
         {
-            this._mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(this._mouseRay, out this._hitInfo, 100.0f, this._cardLayerMask) == true)
-            {
-                this.LookAtMouse();
-            }
-            else if (this._cardTransform.localRotation != Quaternion.identity && this._resetTween == null)
-            {
-                this.ResetCardRotation();                               
-            }
-
-            if (this._resetTween != null && this._resetTween.IsActive() == false)
-            {
-                this._resetTween = null;
-            }
+            this._mouseLooker.EnableMouseLook();
         }
-    }
-
-    private void LookAtMouse()
-    {
-        this._cardTransform.DOKill();
-    
-        Vector3 viewportCardPosition = Camera.main.WorldToViewportPoint(this._cardTransform.position);
-        Vector3 viewportPointPosition = Camera.main.WorldToViewportPoint(this._hitInfo.point);
-
-        float xDistance = Mathf.Clamp(viewportPointPosition.x - viewportCardPosition.x, -this._maxDistanceThresholds.x, this._maxDistanceThresholds.x);
-        float yDistance = Mathf.Clamp(viewportPointPosition.y - viewportCardPosition.y, -this._maxDistanceThresholds.y, this._maxDistanceThresholds.y);
-
-        Vector2 rotationValues = this.GetRotationValues(xDistance, yDistance);
-
-        this._cardTransform.localRotation = Quaternion.Lerp(this._cardTransform.localRotation, Quaternion.Euler(rotationValues.x, rotationValues.y, 0.0f), this.lookSpeed * Time.deltaTime);
-    }
-
-    private Vector2 GetRotationValues(float xDistance, float yDistance)
-    {
-        Vector2 rotationValues = Vector2.zero;
-
-        //Yes this is correct.  The rotation axis and the distance coordinate are two different things
-        rotationValues.x = (yDistance / this._maxDistanceThresholds.y) * this._maxRotationThresholds.y;
-        rotationValues.y = -(xDistance / this._maxDistanceThresholds.x) * this._maxRotationThresholds.x;        
-
-        return rotationValues;
-    }
-
-    public void ResetCardRotation()
-    {
-        this._resetTween = this._cardTransform.DORotate(Vector3.zero, 0.2f);
+        else
+        {
+            this._mouseLooker.DisableMouseLook();
+        }
     }
 }

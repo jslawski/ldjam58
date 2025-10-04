@@ -25,6 +25,8 @@ public class MouseLooker : MonoBehaviour
 
     private float lookSpeed = 10.0f;
 
+    public bool _lookActive = false;
+
     private void Awake()
     {
         this._collider = GetComponent<Collider>();
@@ -34,6 +36,16 @@ public class MouseLooker : MonoBehaviour
     void Start()
     {
         
+    }
+
+    public void EnableMouseLook()
+    {
+        this._lookActive = true;
+    }
+
+    public void DisableMouseLook()
+    {
+        this._lookActive = false;
     }
 
     // Update is called once per frame

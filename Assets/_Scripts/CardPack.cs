@@ -29,13 +29,14 @@ public class CardPack : MonoBehaviour
 
     private float _uncommonPullChance = 0.30f;
     private float _rarePullChance = 0.15f;
-    private float _ultraRarePullChance = 0.05f;
+    private float _ultraRarePullChance = 0.05f;    
 
     private void Awake()
     {
         this._collider = GetComponent<Collider>();
-        
-
+                
+        GetComponent<MouseLooker>().EnableMouseLook();
+       
         this._cards = new Queue<TradingCard>();
 
         this._cardComponents = GetComponentsInChildren<TradingCard>();
