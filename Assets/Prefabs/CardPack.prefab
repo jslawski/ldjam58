@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7400722125657594957}
   - component: {fileID: 8188570156398614431}
-  m_Layer: 0
+  - component: {fileID: 9029077539173604340}
+  - component: {fileID: 6562010299658105793}
+  m_Layer: 3
   m_Name: CardPack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,6 +51,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c59ffce68b39ec4893fdf087980c280, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showcasingCard: {fileID: 0}
+  wrapperRenderer: {fileID: 8502625706212978916}
+  _packLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!65 &9029077539173604340
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919566678883297851}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 6, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6562010299658105793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919566678883297851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c402687fea8187741950b39c6e9aff48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _modelTransform: {fileID: 4002719991626968835}
+  _colliderLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1001 &2985908009115933790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -262,11 +306,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PackWrapper
       objectReference: {fileID: 0}
-    - target: {fileID: 5357301707952453369, guid: b5b4accdf0a09614dbad03dcc58cb49d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8492284463468506268, guid: b5b4accdf0a09614dbad03dcc58cb49d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -325,6 +364,12 @@ PrefabInstance:
 --- !u!4 &4002719991626968835 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8492284463468506268, guid: b5b4accdf0a09614dbad03dcc58cb49d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4780046647950066591}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8502625706212978916 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4010814039158535035, guid: b5b4accdf0a09614dbad03dcc58cb49d,
     type: 3}
   m_PrefabInstance: {fileID: 4780046647950066591}
   m_PrefabAsset: {fileID: 0}

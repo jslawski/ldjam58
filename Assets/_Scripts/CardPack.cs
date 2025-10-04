@@ -12,8 +12,6 @@ public class CardPack : MonoBehaviour
 {
     private Queue<TradingCard> _cards;
 
-    private PackWrapper _packWrapper;
-
     [SerializeField]
     private TradingCard _showcasingCard;
 
@@ -21,15 +19,23 @@ public class CardPack : MonoBehaviour
 
     private List<TradingCardAttributes> _cardAttributes;
 
+    [SerializeField]
+    private Renderer wrapperRenderer;
+
+    private Collider _collider;
+
+    [SerializeField]
+    private LayerMask _packLayerMask;
+
     private float _uncommonPullChance = 0.30f;
     private float _rarePullChance = 0.15f;
     private float _ultraRarePullChance = 0.05f;
 
     private void Awake()
     {
-        CardLibrary.Setup();
-    
-        this._packWrapper = GetComponentInChildren<PackWrapper>();
+        this._collider = GetComponent<Collider>();
+        
+
         this._cards = new Queue<TradingCard>();
 
         this._cardComponents = GetComponentsInChildren<TradingCard>();
@@ -42,21 +48,11 @@ public class CardPack : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        this.GeneratePack();
-    }
-
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            SceneManager.LoadScene(0);
-        }
-
         if (Input.GetMouseButtonUp(0) == true)
         {
-            if (this._packWrapper.IsClickingPack())
+            if (this.IsClickingPack())
             {
                 StartCoroutine(this.OpenPack());
             }
@@ -70,9 +66,9 @@ public class CardPack : MonoBehaviour
 
     private IEnumerator OpenPack()
     {
-        this._packWrapper.OpenCardPack();
+        this.UnwrapPack();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
 
         this._showcasingCard = this._cards.Dequeue();
         this._showcasingCard.ShowcaseCard();
@@ -92,12 +88,21 @@ public class CardPack : MonoBehaviour
             this._showcasingCard.ShowcaseCard();
         }
         else
-        { 
-            //Do "end of pack" stuff
+        {
+            if (CardPacksManager.instance.allPacksOpened == false)
+            {
+                CardPacksManager.instance.PrepareNextPack();
+            }
+            else
+            { 
+                //All Packs Opened trigger here
+            }
+
+            Destroy(this.gameObject);
         }
     }
 
-    private void GeneratePack()
+    public void GeneratePack(Material packWrapper)
     {
         TradingCardAttributes newCard;
     
@@ -119,10 +124,13 @@ public class CardPack : MonoBehaviour
         for (int i = 0; i < this._cardComponents.Length; i++)
         {
             this._cardComponents[i].SetupCard(this._cardAttributes[i]);
+            this._cardComponents[i].gameObject.SetActive(false);
         }
+
+        this.SetWrapperMaterial(packWrapper);
     }
 
-    public TradingCardAttributes GenerateCard()
+    private TradingCardAttributes GenerateCard()
     {
         Rarity cardRarity = this.GenerateRarity();
 
@@ -160,12 +168,55 @@ public class CardPack : MonoBehaviour
     {
         for (int i = 0; i < currentIndex; i++)
         {
-            if (this._cardComponents[i].cardAttributes == currentCard)
+            if (this._cardAttributes[i].cardMaterial == currentCard.cardMaterial)
             {
                 return true;
             }
         }
 
         return false;
+    }
+
+    public void SetWrapperMaterial(Material wrapperRenderer)
+    {
+        this.wrapperRenderer.material = wrapperRenderer;
+    }
+    public bool IsClickingPack()
+    {
+        Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(mouseRay, 100, this._packLayerMask) == true)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void UnwrapPack()
+    {
+        for (int i = 0; i < this._cardComponents.Length; i++) 
+        {
+            this._cardComponents[i].gameObject.SetActive(true);
+        }
+    
+        this.wrapperRenderer.enabled = false;
+        this._collider.enabled = false;
+    }
+
+    private void ShowCards()
+    {
+        for (int i = 0; i < this._cardComponents.Length; i++)
+        {
+            this._cardComponents[i].gameObject.SetActive(true);
+        }
+    }
+
+    private void HideCards()
+    {
+        for (int i = 0; i < this._cardComponents.Length; i++)
+        {
+            this._cardComponents[i].gameObject.SetActive(false);
+        }
     }
 }
