@@ -1,17 +1,11 @@
 using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class TradingCard : MonoBehaviour
 {
     private Transform _rootTransform;
-
-    [SerializeField]
-    private Transform _cardTransform;
 
     [SerializeField]
     private LayerMask _cardLayerMask;
@@ -51,8 +45,6 @@ public class TradingCard : MonoBehaviour
         this._moneyValueLabel.text = this.cardAttributes.moneyValue.ToString();
         this._happyValueLabel.text = this.cardAttributes.happyValue.ToString();
     }
-
-    
 
     public void ShowcaseCard()
     {

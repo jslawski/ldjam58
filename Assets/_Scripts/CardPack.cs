@@ -95,8 +95,8 @@ public class CardPack : MonoBehaviour
                 CardPacksManager.instance.PrepareNextPack();
             }
             else
-            { 
-                //All Packs Opened trigger here
+            {
+                CardPacksManager.instance.SetupSummaryManager();
             }
 
             Destroy(this.gameObject);
@@ -129,6 +129,8 @@ public class CardPack : MonoBehaviour
         }
 
         this.SetWrapperMaterial(packWrapper);
+
+        CardPacksManager.instance.AddCardsToPackCards(this._cardAttributes);
     }
 
     private TradingCardAttributes GenerateCard()

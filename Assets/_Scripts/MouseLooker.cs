@@ -51,6 +51,11 @@ public class MouseLooker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (this._lookActive == false)
+        {
+            return;
+        }
+
         this._mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(this._mouseRay, out this._hitInfo, 100.0f, this._colliderLayerMask) == true)

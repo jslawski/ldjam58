@@ -17,6 +17,9 @@ public class CardPacksManager : MonoBehaviour
     private Vector3 _packSpawnPosition = new Vector3(0.0f, -10.0f, 0.0f);
 
     public bool allPacksOpened = false;
+    
+    [SerializeField]
+    private GameObject _summaryManagerPrefab;
 
     private void Awake()
     {
@@ -63,11 +66,30 @@ public class CardPacksManager : MonoBehaviour
         newPack.GeneratePack(this._purchasedPackWrappers.Dequeue());
 
         newPack.gameObject.transform.DOMove(Vector3.zero, 0.2f).SetEase(Ease.OutBack);
-        //newPack.gameObject.transform.DORotate(new Vector3(0.0f, 360.0f, 0.0f), 0.2f);
 
         if (this._purchasedPackWrappers.Count <= 0)
         {
             this.allPacksOpened = true;
         }
-    }    
+    }
+
+    public void AddCardsToPackCards(List<TradingCardAttributes> cards)
+    {
+        this._packCards.Add(cards);
+    }
+
+    public List<TradingCardAttributes> GetPackCards(int index)
+    {
+        return this._packCards[index];
+    }
+
+    public int GetNumPacksOpened()
+    {
+        return this._packCards.Count;
+    }
+
+    public void SetupSummaryManager()
+    {
+        Instantiate(this._summaryManagerPrefab);        
+    }
 }
