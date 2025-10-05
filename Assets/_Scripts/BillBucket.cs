@@ -18,6 +18,8 @@ public class BillBucket : RedeemBucket
     [SerializeField]
     private SpriteRenderer _billImage;
     [SerializeField]
+    private SpriteRenderer _completedStamp;
+    [SerializeField]
     private TextMeshProUGUI _billTitle;
     [SerializeField]
     private TextMeshProUGUI _targetValueLabel;
@@ -25,6 +27,12 @@ public class BillBucket : RedeemBucket
     private TextMeshProUGUI _currentValueLabel;
     [SerializeField]
     private TextMeshProUGUI _daysRemainingLabel;
+    [SerializeField]
+    private TextMeshProUGUI _punishmentValueLabel;
+
+
+    private Vector3 _initialScale;
+    private Vector3 _emphasizedScale;
 
     public void Setup(BillAttributes billAttributes)
     {
@@ -37,7 +45,11 @@ public class BillBucket : RedeemBucket
         this._billTitle.text = this.billAttributes.title;
         this._targetValueLabel.text = "$" + this.billAttributes.targetAmount.ToString();
         this._currentValueLabel.text = "$" + this.currentValue.ToString();
-        this._daysRemainingLabel.text = this.daysRemaining.ToString() + " Remaining...";
+        this._daysRemainingLabel.text = this.daysRemaining.ToString() + " Days Remaining...";
+        this._punishmentValueLabel.text = "Punishment: -" + this.billAttributes.punishmentAmount.ToString() + " :(";
+
+        this._initialScale = this._currentValueLabel.rectTransform.localScale;
+        this._emphasizedScale = this._initialScale * 1.5f;
     }
 
     public override void RedeemCardValue(int moneyValue, int happyValue)
@@ -45,7 +57,7 @@ public class BillBucket : RedeemBucket
         this.currentValue += moneyValue;
 
         StopAllCoroutines();
-        StartCoroutine(this.IncrementToCurrentValue());
+        StartCoroutine(this.IncrementToCurrentValue(this.currentValue - moneyValue));
 
         if (this.currentValue >= this.billAttributes.targetAmount)
         {
@@ -53,29 +65,32 @@ public class BillBucket : RedeemBucket
         }
     }
 
-    private IEnumerator IncrementToCurrentValue()
-    {
-        int labelValue = Int32.Parse(this._currentValueLabel.text);
-        int amountToIncrement = 5;
+    private IEnumerator IncrementToCurrentValue(int catchUpValue)
+    {        
+        int amountToIncrement = 5;        
 
-        Vector3 originalScale = this._currentValueLabel.rectTransform.localScale;
+        this._currentValueLabel.rectTransform.DOScale(this._emphasizedScale, 0.2f).SetEase(Ease.OutBack);
 
-        this._currentValueLabel.rectTransform.DOScale(this._currentValueLabel.rectTransform.localScale * 1.2f, 0.2f).SetEase(Ease.OutBack);
-
-        while (labelValue < this.currentValue)
+        while (catchUpValue < this.currentValue)
         {
-            labelValue += amountToIncrement;
-            this._currentValueLabel.text = labelValue.ToString();
+            catchUpValue += amountToIncrement;
+            this._currentValueLabel.text = "$" + catchUpValue.ToString();
             yield return new WaitForFixedUpdate();
         }
 
-        this._currentValueLabel.rectTransform.DOScale(originalScale, 0.2f).SetEase(Ease.OutBack);
+        this._currentValueLabel.rectTransform.DOScale(this._initialScale, 0.2f).SetEase(Ease.OutBack);
+
+        if (this.currentStatus == BillStatus.Complete)
+        {
+            this._completedStamp.gameObject.SetActive(true);
+            this._completedStamp.gameObject.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+        }
     }
 
     public void DecrementBillDays()
     {
         this.daysRemaining -= 1;
-        this._daysRemainingLabel.text = this.daysRemaining.ToString() + " Remaining...";
+        this._daysRemainingLabel.text = this.daysRemaining.ToString() + " Days Remaining...";
 
         if (this.daysRemaining <= 0)
         {

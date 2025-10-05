@@ -204,8 +204,17 @@ public class SummaryCard : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Bucket")
-        {
+        {        
             this._highlightedRedeemBucket = other.gameObject.GetComponent<RedeemBucket>();
+
+            //Ignore redeem buckets that are completed bills
+            BillBucket potentialBill = this._highlightedRedeemBucket.GetComponent<BillBucket>();
+            if (potentialBill != null && potentialBill.currentStatus == BillStatus.Complete)
+            {
+                this._highlightedRedeemBucket = null;
+                return;
+            }
+
             this._highlightedRedeemBucket.EmphasizeBucket();
         }
     }
@@ -221,7 +230,7 @@ public class SummaryCard : MonoBehaviour
     }
 
     private void RedeemCard()
-    {
+    {    
         this.gameObject.GetComponent<Collider>().enabled = false;
 
         StartCoroutine(this.RedeemAnimation());

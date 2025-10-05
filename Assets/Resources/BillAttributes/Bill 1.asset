@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca8629c114555643bab1cb521ff03cb, type: 3}
   m_Name: Bill 1
   m_EditorClassIdentifier: 
-  title: 
-  billImage: {fileID: 0}
-  targetAmount: 0
-  daysToComplete: 0
+  title: Family is Hungry
+  billImage: {fileID: 21300000, guid: 948cb3ad85932204d9e138b9f00fba78, type: 3}
+  targetAmount: 300
+  daysToComplete: 2
+  punishmentAmount: 100

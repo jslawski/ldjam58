@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca8629c114555643bab1cb521ff03cb, type: 3}
   m_Name: Bill 3
   m_EditorClassIdentifier: 
-  title: 
-  billImage: {fileID: 0}
-  targetAmount: 0
-  daysToComplete: 0
+  title: Mafia Dues
+  billImage: {fileID: 21300000, guid: fd7d3ffec1df0204b86605e849136f27, type: 3}
+  targetAmount: 2000
+  daysToComplete: 5
+  punishmentAmount: 300

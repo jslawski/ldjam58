@@ -25,8 +25,6 @@ public class CardPacksManager : MonoBehaviour
     [SerializeField]
     private GameObject _summaryManagerPrefab;
 
-    public RedeemBucket[] redeemBuckets;
-
     private void Awake()
     {
         if (instance == null)
@@ -106,10 +104,5 @@ public class CardPacksManager : MonoBehaviour
     public void SetupSummaryManager()
     {
         Instantiate(this._summaryManagerPrefab);
-
-        for (int i = 0; i < this.redeemBuckets.Length; i++)
-        {
-            this.redeemBuckets[i].gameObject.SetActive(true);
-        }
     }
 }

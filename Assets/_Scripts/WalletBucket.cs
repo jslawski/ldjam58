@@ -33,7 +33,7 @@ public class WalletBucket : RedeemBucket
 
         Vector3 originalScale = this._currentValueLabel.rectTransform.localScale;
 
-        this._currentValueLabel.rectTransform.DOScale(this._currentValueLabel.rectTransform.localScale * 1.2f, 0.2f).SetEase(Ease.OutBack);
+        this._currentValueLabel.rectTransform.DOScale(this._currentValueLabel.rectTransform.localScale * 1.5f, 0.2f).SetEase(Ease.OutBack);
 
         while (labelValue < this.currentValue)
         {
@@ -52,7 +52,7 @@ public class WalletBucket : RedeemBucket
 
         Vector3 originalScale = this._currentValueLabel.rectTransform.localScale;
 
-        this._currentValueLabel.rectTransform.DOScale(this._currentValueLabel.rectTransform.localScale * 1.2f, 0.2f).SetEase(Ease.OutBack);
+        this._currentValueLabel.rectTransform.DOScale(this._currentValueLabel.rectTransform.localScale * 1.5f, 0.2f).SetEase(Ease.OutBack);
 
         while (labelValue > this.currentValue)
         {

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca8629c114555643bab1cb521ff03cb, type: 3}
   m_Name: Bill 2
   m_EditorClassIdentifier: 
-  title: 
-  billImage: {fileID: 0}
-  targetAmount: 0
-  daysToComplete: 0
+  title: Hospital Fees
+  billImage: {fileID: 21300000, guid: b962cb385e72f6f438816b4a096c5b6f, type: 3}
+  targetAmount: 5000
+  daysToComplete: 10
+  punishmentAmount: 50
