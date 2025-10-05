@@ -25,13 +25,15 @@ Material:
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _ALPHATEST_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2450
+  stringTagMap:
+    RenderType: TransparentCutout
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -141,6 +143,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 885f7afbb3c657344b2fe817f6768e94, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_0418180af20a4dd3b1ef60d5719ad8c0_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: a3f1e7b1ffe26324c8dc23c23826344f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_06f78ffb4fe144eab2caa10cc16edf63_Texture_1_Texture2D:
         m_Texture: {fileID: 2800000, guid: 885f7afbb3c657344b2fe817f6768e94, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -197,6 +203,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_dcf5f4a4d9484af1abb84a3b34646056_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: a3f1e7b1ffe26324c8dc23c23826344f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_f303be35a76c4501aa9dd42ceaf2f277_Texture_1_Texture2D:
         m_Texture: {fileID: 2800000, guid: cce8337c19c94234cb5a7af3e7ad2527, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -227,8 +237,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaClip: 0
-    - _AlphaToMask: 0
+    - _AlphaClip: 1
+    - _AlphaToMask: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BlendOp: 0
@@ -239,12 +249,17 @@ Material:
     - _Border_Intensity: 0
     - _Border_Streaks: 1
     - _BumpScale: 1
+    - _CastShadows: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cull: 2
+    - _Cull: 0
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _Dissolve_Amount: 0
+    - _Dissolve_Noise_Toggle: 1
+    - _Dissolve_Scale: 37.69
+    - _Dissolve_Thickness: 0.07
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -276,12 +291,15 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _WorkflowMode: 1
+    - _ZTest: 4
     - _ZWrite: 1
+    - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Base_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Border_Holo_Direction: {r: 1, g: 1, b: 0, a: 0}
     - _Color: {r: 0.43808663, g: 0.109803915, b: 0.58431375, a: 1}
+    - _Dissolve_Edge_Color: {r: 0, g: 1.8325844, b: 4.2870936, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Holo_Color_1_TileOffset: {r: 1, g: 1, b: 0, a: 0}
     - _Holo_Color_2_TileOffset: {r: 0.15, g: 0.15, b: 0, a: 0}

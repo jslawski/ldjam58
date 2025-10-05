@@ -30,13 +30,18 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BackingMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: b2e008f2f232b054da29015b85a6f3b2, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -235,12 +240,17 @@ Material:
     - _Border_Intensity: 0.6
     - _Border_Streaks: 1
     - _BumpScale: 1
+    - _CastShadows: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _Dissolve_Amount: 0
+    - _Dissolve_Noise_Toggle: 1
+    - _Dissolve_Scale: 5
+    - _Dissolve_Thickness: 0.25
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -272,11 +282,15 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _WorkflowMode: 1
+    - _ZTest: 4
     - _ZWrite: 1
+    - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Base_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Border_Holo_Direction: {r: 1, g: 1, b: 0, a: 0}
     - _Color: {r: 0.32215884, g: 0.5478007, b: 0.57232696, a: 1}
+    - _Dissolve_Edge_Color: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Holo_Color_1_TileOffset: {r: 1, g: 1, b: 0, a: 0}
     - _Holo_Color_2_TileOffset: {r: 0.15, g: 0.15, b: 0, a: 0}
