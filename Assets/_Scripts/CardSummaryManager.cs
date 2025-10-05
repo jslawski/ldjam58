@@ -27,7 +27,8 @@ public class CardSummaryManager : MonoBehaviour
     {
         this.DisplayCurrentPack();
 
-        this._prevButton.interactable = false;
+        this._prevButton.interactable = false;        
+        this._nextButton.interactable = false;
 
         if (CardPacksManager.instance.GetNumPacksOpened() > 1)
         {

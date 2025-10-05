@@ -8,6 +8,8 @@ public class CardPacksManager : MonoBehaviour
 {
     public static CardPacksManager instance;
 
+    public int totalPacks = 1;
+
     private Queue<Material> _purchasedPackWrappers;
     private List<List<TradingCardAttributes>> _packCards;    
 
@@ -39,7 +41,7 @@ public class CardPacksManager : MonoBehaviour
     {
         Material[] allWrappers = Resources.LoadAll<Material>("PackWrappers");
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < this.totalPacks; i++)
         {
             int randomWrapperIndex = Random.Range(0, allWrappers.Length);
             this.PurchasePack(allWrappers[randomWrapperIndex]);
