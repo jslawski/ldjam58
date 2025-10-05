@@ -99,7 +99,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _mainTexture:
-        m_Texture: {fileID: 2800000, guid: 1d0ff94ace6f87747a3074639c61173d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8740d5ab7a7d1994aa5213124e3a0fe5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _mask:
@@ -107,7 +107,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _staticMask:
-        m_Texture: {fileID: 2800000, guid: 0e7f8b7c0972d3843a5a51c03eb669b2, type: 3}
+        m_Texture: {fileID: 2800000, guid: f3acbf4620cfbfe409bf08d476b61c3a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texture:
