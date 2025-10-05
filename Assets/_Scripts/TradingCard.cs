@@ -70,6 +70,8 @@ public class TradingCard : MonoBehaviour
         this._rootTransform.DOLocalRotate(this._dismissRotation, 0.3f);
 
         this._isShowcasing = false;
+
+        this._mouseLooker.DisableMouseLook();
     }
 
     private void Update()

@@ -47,6 +47,7 @@ public class MouseLooker : MonoBehaviour
 
     public void DisableMouseLook()
     {
+        this.ResetRotation();
         this._lookActive = false;
     }
 

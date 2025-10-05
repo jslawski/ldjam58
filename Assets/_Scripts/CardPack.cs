@@ -1,7 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -12,6 +12,11 @@ public class CardPack : MonoBehaviour
 {
     private Queue<TradingCard> _cards;
 
+    private Transform _rootTransform;
+
+    [SerializeField]
+    private Transform _packTransform;
+
     [SerializeField]
     private TradingCard _showcasingCard;
 
@@ -20,19 +25,25 @@ public class CardPack : MonoBehaviour
     private List<TradingCardAttributes> _cardAttributes;
 
     [SerializeField]
-    private Renderer wrapperRenderer;
+    private SkinnedMeshRenderer packRenderer;
 
     private Collider _collider;
 
     [SerializeField]
     private LayerMask _packLayerMask;
 
+    [SerializeField]
+    private GameObject _particleObject;
+
     private float _uncommonPullChance = 0.30f;
     private float _rarePullChance = 0.15f;
-    private float _ultraRarePullChance = 0.05f;    
+    private float _ultraRarePullChance = 0.05f;
+
+    private float _timeToOpenPack = 0.3f;
 
     private void Awake()
     {
+        this._rootTransform = this.gameObject.transform;
         this._collider = GetComponent<Collider>();
                 
         GetComponent<MouseLooker>().EnableMouseLook();
@@ -47,6 +58,8 @@ public class CardPack : MonoBehaviour
         { 
             this._cards.Enqueue(this._cardComponents[i]);
         }
+
+        DOTween.Init();
     }
 
     private void Update()
@@ -55,7 +68,7 @@ public class CardPack : MonoBehaviour
         {
             if (this.IsClickingPack())
             {
-                StartCoroutine(this.OpenPack());
+                StartCoroutine(this.OpenPackSequence());
             }
 
             if (this._showcasingCard != null)
@@ -65,12 +78,60 @@ public class CardPack : MonoBehaviour
         }
     }
 
-    private IEnumerator OpenPack()
+    private void PlayTweenSequence()
     {
-        this.UnwrapPack();
+        Tweener shakeTween = this._rootTransform.DOShakePosition(1.0f, 0.2f, 25, 90, false, false);
+        Tweener shrinkTween = this._rootTransform.DOScale(0.75f, 1.0f);
 
-        yield return new WaitForSeconds(0.2f);
+        float blendShapeWeight = 0.0f;
+        Tweener growTween = this._rootTransform.DOScale(1.0f, this._timeToOpenPack).SetEase(Ease.OutBack, 20.0f);
 
+        float dissolveAmount = 0.0f;
+
+        Sequence openSequence = DOTween.Sequence();
+
+        openSequence.Append(shakeTween)
+        .Insert(0.0f, shrinkTween)
+        .Append(growTween)
+        .Insert(1.0f, DOTween.To(() => blendShapeWeight, x => blendShapeWeight = x, 100, this._timeToOpenPack).OnUpdate(() => { this.packRenderer.SetBlendShapeWeight(0, blendShapeWeight); }))
+        .AppendInterval(0.3f)
+        .Append(DOTween.To(() => dissolveAmount, x => dissolveAmount = x, 1.0f, 0.5f).OnUpdate(() => { this.packRenderer.material.SetFloat("_Dissolve_Amount", dissolveAmount); }));
+
+        openSequence.Play();
+    }
+
+    private IEnumerator OpenPackSequence()
+    {
+        GetComponent<MouseLooker>().DisableMouseLook();
+        this._collider.enabled = false;
+
+        this.PlayTweenSequence();
+
+        yield return new WaitForSeconds(1.2f);
+
+        this.ActivateParticles();
+        this.ActivateCards();
+
+        yield return new WaitForSeconds(1.0f);
+
+        this.ShowcaseFirstCard();
+    }
+
+    private void ActivateCards()
+    {
+        for (int i = 0; i < this._cardComponents.Length; i++)
+        {
+            this._cardComponents[i].gameObject.SetActive(true);
+        }
+    }
+
+    private void ActivateParticles()
+    {
+        this._particleObject.SetActive(true);
+    }
+
+    private void ShowcaseFirstCard()
+    {
         this._showcasingCard = this._cards.Dequeue();
         this._showcasingCard.ShowcaseCard();
     }
@@ -128,7 +189,7 @@ public class CardPack : MonoBehaviour
             this._cardComponents[i].gameObject.SetActive(false);
         }
 
-        this.SetWrapperMaterial(packWrapper);
+        //this.SetWrapperMaterial(packWrapper);
 
         CardPacksManager.instance.AddCardsToPackCards(this._cardAttributes);
     }
@@ -182,7 +243,7 @@ public class CardPack : MonoBehaviour
 
     public void SetWrapperMaterial(Material wrapperRenderer)
     {
-        this.wrapperRenderer.material = wrapperRenderer;
+        //this.packRenderer.material = wrapperRenderer;
     }
     public bool IsClickingPack()
     {
@@ -202,9 +263,15 @@ public class CardPack : MonoBehaviour
         {
             this._cardComponents[i].gameObject.SetActive(true);
         }
-    
-        this.wrapperRenderer.enabled = false;
+
+        this.OpenTopOfPack();
+                
         this._collider.enabled = false;
+    }
+
+    private void OpenTopOfPack()
+    {
+       
     }
 
     private void ShowCards()
