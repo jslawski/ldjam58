@@ -20,7 +20,9 @@ public class MouseLooker : MonoBehaviour
 
     private Tween _resetTween;
 
+    [SerializeField]
     private Vector2 _maxDistanceThresholds = new Vector2(0.1f, 0.3f);
+    [SerializeField]
     private Vector2 _maxRotationThresholds = new Vector3(15.0f, 7.0f);
 
     private float lookSpeed = 10.0f;

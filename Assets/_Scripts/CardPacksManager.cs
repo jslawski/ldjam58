@@ -14,7 +14,8 @@ public class CardPacksManager : MonoBehaviour
     [SerializeField]
     private GameObject _cardPackPrefab;
 
-    private Vector3 _packSpawnPosition = new Vector3(0.0f, -10.0f, 0.0f);
+    private Vector3 _packSpawnPosition = new Vector3(0.0f, -10.0f, -5.0f);
+    private Vector3 _packTargetPosition = new Vector3(0.0f, 0.0f, -5.0f);
 
     public bool allPacksOpened = false;
     
@@ -65,7 +66,7 @@ public class CardPacksManager : MonoBehaviour
         CardPack newPack = Instantiate(this._cardPackPrefab, this._packSpawnPosition, new Quaternion()).GetComponent<CardPack>();
         newPack.GeneratePack(this._purchasedPackWrappers.Dequeue());
 
-        newPack.gameObject.transform.DOMove(Vector3.zero, 0.2f).SetEase(Ease.OutBack);
+        newPack.gameObject.transform.DOMove(this._packTargetPosition, 0.2f).SetEase(Ease.OutBack);
 
         if (this._purchasedPackWrappers.Count <= 0)
         {
