@@ -211,7 +211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &943864431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,7 +306,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 71bf451c3192a574ab85a36dbcb433eb, type: 2}
+      objectReference: {fileID: 2100000, guid: ebbccdfc967e70a42ab33776996b2bfa, type: 2}
     - target: {fileID: 919132149155446097, guid: 05abb43ddbce23d4a893f96c0a4c7e88,
         type: 3}
       propertyPath: m_Name
@@ -873,7 +873,7 @@ PrefabInstance:
     - target: {fileID: 5921125951303300312, guid: 5e86a7f3ce579af4f92d35b11ce72271,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.22699998
+      value: 0.124
       objectReference: {fileID: 0}
     - target: {fileID: 5921125951303300312, guid: 5e86a7f3ce579af4f92d35b11ce72271,
         type: 3}
@@ -946,7 +946,7 @@ PrefabInstance:
     - target: {fileID: 8142132132013919493, guid: 478951dc77ecc044caa8e6088b557973,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.22699998
+      value: 0.174
       objectReference: {fileID: 0}
     - target: {fileID: 8142132132013919493, guid: 478951dc77ecc044caa8e6088b557973,
         type: 3}
@@ -1051,7 +1051,7 @@ SkinnedMeshRenderer:
   m_Mesh: {fileID: 6110984001058879197, guid: ec29b8f56e688ba4d9214e976fca5ec3, type: 3}
   m_Bones: []
   m_BlendShapeWeights:
-  - 0
+  - 100
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: -0.01, y: -0.01, z: -0.02}
