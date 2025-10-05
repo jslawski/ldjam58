@@ -22,6 +22,9 @@ public class SummaryCard : MonoBehaviour
     [SerializeField]
     private LayerMask _colliderLayerMask;
 
+    [SerializeField]
+    private LayerMask _bucketLayerMask;
+
     private Ray _mouseRay;
 
     public TradingCardAttributes cardAttributes;
@@ -39,6 +42,13 @@ public class SummaryCard : MonoBehaviour
     private Coroutine _dragCoroutine = null;
 
     private float _minFollowSpeed = 10.0f;
+
+    private RedeemBucket _highlightedRedeemBucket;
+
+    public bool redeemed = false;
+
+    private int _packNum = 0;
+    private int _cardNum = 0;
 
     private void Awake()
     {
@@ -74,9 +84,20 @@ public class SummaryCard : MonoBehaviour
         if (Input.GetMouseButtonUp(0) == true)
         {
             //Also check here if the card is over a bucket
-            if (this._isShowcasing == true || this._isDragging == true)
+            if (this._isShowcasing == true)
             {
                 this.ReturnCard();
+            }
+            else if (this._isDragging)
+            {
+                if (this._highlightedRedeemBucket == null)
+                {
+                    this.ReturnCard();
+                }
+                else
+                {
+                    this.RedeemCard();
+                }
             }
             else if (this.IsClickingCard() == true)
             {
@@ -108,13 +129,19 @@ public class SummaryCard : MonoBehaviour
         this._isDragging = false;
     }
 
-    public void SetupCard(TradingCardAttributes cardAttributes)
-    {
+    public void SetupCard(TradingCardAttributes cardAttributes, int packNum, int cardNum)
+    {       
+        this.gameObject.GetComponent<Collider>().enabled = true;
+        this._highlightedRedeemBucket = null;
+
         this.cardAttributes = cardAttributes;
 
         this._cardRenderer.material = this.cardAttributes.cardMaterial;
         this._moneyValueLabel.text = this.cardAttributes.moneyValue.ToString();
         this._happyValueLabel.text = this.cardAttributes.happyValue.ToString();
+
+        this._packNum = packNum;
+        this._cardNum = cardNum;
     }
 
     public bool IsClickingCard()
@@ -172,5 +199,57 @@ public class SummaryCard : MonoBehaviour
         }
 
         this._dragCoroutine = null;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Bucket")
+        {
+            this._highlightedRedeemBucket = other.gameObject.GetComponent<RedeemBucket>();
+            this._highlightedRedeemBucket.EmphasizeBucket();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Bucket")
+        {
+            this._highlightedRedeemBucket = other.gameObject.GetComponent<RedeemBucket>();
+            this._highlightedRedeemBucket.RevertBucket();
+            this._highlightedRedeemBucket = null;
+        }
+    }
+
+    private void RedeemCard()
+    {
+        this.gameObject.GetComponent<Collider>().enabled = false;
+
+        StartCoroutine(this.RedeemAnimation());
+
+        this._highlightedRedeemBucket.RedeemCardValue(this.cardAttributes.moneyValue, this.cardAttributes.happyValue);
+        this._highlightedRedeemBucket.RevertBucket();
+
+        this._highlightedRedeemBucket = null;
+
+        CardPacksManager.instance.cardRedemptionStatus[this._packNum][this._cardNum] = true;
+    }
+
+    private IEnumerator RedeemAnimation()
+    {
+        this._rootTransform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack);
+        this._rootTransform.DOMove(this._highlightedRedeemBucket.gameObject.transform.position, 0.2f);
+
+        yield return new WaitForSeconds(0.3f);
+
+        this._rootTransform.position = this._originalPosition;
+
+        CardSummaryManager.instance.IncrementRedeemedCardCount();
+
+        if (CardSummaryManager.instance.AllCardsRedeemed() == true)
+        {
+            CardSummaryManager.instance.TriggerEndDay();
+        }
+
+        this.gameObject.SetActive(false);
     }
 }

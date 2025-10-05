@@ -4,9 +4,12 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
+using JetBrains.Annotations;
 
 public class CardSummaryManager : MonoBehaviour
 {
+    public static CardSummaryManager instance;
+
     private SummaryCard[] _summaryCards;
     private int _currentPage = 0;
 
@@ -17,9 +20,15 @@ public class CardSummaryManager : MonoBehaviour
     [SerializeField]
     private Button _nextButton;
 
+    private Vector3 _initialScale = new Vector3(1.5f, 1.5f, 1.5f);
+
+    private int _totalRedeemedCards = 0;
+
     private void Awake()
     {
         this._summaryCards = GetComponentsInChildren<SummaryCard>();
+
+        instance = this;        
     }
 
     // Start is called before the first frame update
@@ -33,7 +42,7 @@ public class CardSummaryManager : MonoBehaviour
         if (CardPacksManager.instance.GetNumPacksOpened() > 1)
         {
             this._nextButton.interactable = true;
-        }
+        }        
     }
 
     private void DisplayCurrentPack()
@@ -42,8 +51,18 @@ public class CardSummaryManager : MonoBehaviour
 
         for (int i = 0; i < this._summaryCards.Length; i++)
         {
-            this._summaryCards[i].SetupCard(packCards[i]);
+            if (CardPacksManager.instance.cardRedemptionStatus[this._currentPage][i] == true)
+            {
+                this._summaryCards[i].gameObject.SetActive(false);
+            }
+            else
+            {
+                this._summaryCards[i].gameObject.SetActive(true);
+            }
+        
+            this._summaryCards[i].SetupCard(packCards[i], this._currentPage, i);
             this._summaryCards[i].transform.position = new Vector3(this._summaryCards[i].transform.position.x, this._summaryCards[i].transform.position.y, -1.0f);
+            this._summaryCards[i].transform.localScale = this._initialScale;
             this._summaryCards[i].DOKill();
             this._summaryCards[i].transform.DOMoveZ(0.0f, 0.3f).SetEase(Ease.OutBack);
         }
@@ -90,5 +109,20 @@ public class CardSummaryManager : MonoBehaviour
     private void UpdatePageLabel()
     { 
         this._pageLabel.text = "Pack #" + (this._currentPage + 1);
+    }
+
+    public void IncrementRedeemedCardCount()
+    {
+        this._totalRedeemedCards++;
+    }
+
+    public bool AllCardsRedeemed()
+    {     
+        return (this._totalRedeemedCards >= (CardPacksManager.instance.GetNumPacksOpened() * this._summaryCards.Length));
+    }
+
+    public void TriggerEndDay()
+    {
+        Debug.LogError("ALL CARDS REDEEMED, END OF DAY");
     }
 }

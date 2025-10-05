@@ -11,7 +11,8 @@ public class CardPacksManager : MonoBehaviour
     public int totalPacks = 1;
 
     private Queue<Material> _purchasedPackWrappers;
-    private List<List<TradingCardAttributes>> _packCards;    
+    private List<List<TradingCardAttributes>> _packCards;
+    public List<List<bool>> cardRedemptionStatus;
 
     [SerializeField]
     private GameObject _cardPackPrefab;
@@ -24,6 +25,8 @@ public class CardPacksManager : MonoBehaviour
     [SerializeField]
     private GameObject _summaryManagerPrefab;
 
+    public RedeemBucket[] redeemBuckets;
+
     private void Awake()
     {
         if (instance == null)
@@ -35,6 +38,7 @@ public class CardPacksManager : MonoBehaviour
     
         this._purchasedPackWrappers = new Queue<Material>();
         this._packCards = new List<List<TradingCardAttributes>>();
+        this.cardRedemptionStatus = new List<List<bool>>();
     }
 
     private void Start()
@@ -79,6 +83,14 @@ public class CardPacksManager : MonoBehaviour
     public void AddCardsToPackCards(List<TradingCardAttributes> cards)
     {
         this._packCards.Add(cards);
+        
+        List<bool> redemptionList = new List<bool>();
+        for (int i = 0; i < cards.Count; i++) 
+        {
+            redemptionList.Add(false);
+        }
+
+        this.cardRedemptionStatus.Add(redemptionList);
     }
 
     public List<TradingCardAttributes> GetPackCards(int index)
@@ -93,6 +105,11 @@ public class CardPacksManager : MonoBehaviour
 
     public void SetupSummaryManager()
     {
-        Instantiate(this._summaryManagerPrefab);        
+        Instantiate(this._summaryManagerPrefab);
+
+        for (int i = 0; i < this.redeemBuckets.Length; i++)
+        {
+            this.redeemBuckets[i].gameObject.SetActive(true);
+        }
     }
 }
