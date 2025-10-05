@@ -53,7 +53,7 @@ public class TradingCard : MonoBehaviour
 
     private IEnumerator SetupShowcase()
     {
-        this._rootTransform.DOMove(this._showcasePosition, 0.3f).SetEase(Ease.OutBack);
+        this._rootTransform.DOMove(this._showcasePosition, 0.3f).SetEase(Ease.OutBack).SetLink(this.gameObject);
 
         yield return new WaitForSeconds(0.3f);
 
@@ -66,8 +66,8 @@ public class TradingCard : MonoBehaviour
     {
         this._rootTransform.DOKill();    
 
-        this._rootTransform.DOLocalMove(this._dismissPosition, 0.3f);
-        this._rootTransform.DOLocalRotate(this._dismissRotation, 0.3f);
+        this._rootTransform.DOLocalMove(this._dismissPosition, 0.3f).SetLink(this.gameObject);
+        this._rootTransform.DOLocalRotate(this._dismissRotation, 0.3f).SetLink(this.gameObject);
 
         this._isShowcasing = false;
 

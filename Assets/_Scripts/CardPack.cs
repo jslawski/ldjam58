@@ -80,11 +80,11 @@ public class CardPack : MonoBehaviour
 
     private void PlayTweenSequence()
     {
-        Tweener shakeTween = this._rootTransform.DOShakePosition(1.0f, 0.2f, 25, 90, false, false);
-        Tweener shrinkTween = this._rootTransform.DOScale(0.75f, 1.0f);
+        Tweener shakeTween = this._rootTransform.DOShakePosition(1.0f, 0.2f, 25, 90, false, false).SetLink(this.gameObject);
+        Tweener shrinkTween = this._rootTransform.DOScale(0.75f, 1.0f).SetLink(this.gameObject);
 
         float blendShapeWeight = 0.0f;
-        Tweener growTween = this._rootTransform.DOScale(1.0f, this._timeToOpenPack).SetEase(Ease.OutBack, 20.0f);
+        Tweener growTween = this._rootTransform.DOScale(1.0f, this._timeToOpenPack).SetEase(Ease.OutBack, 20.0f).SetLink(this.gameObject);
 
         float dissolveAmount = 0.0f;
 
@@ -93,9 +93,9 @@ public class CardPack : MonoBehaviour
         openSequence.Append(shakeTween)
         .Insert(0.0f, shrinkTween)
         .Append(growTween)
-        .Insert(1.0f, DOTween.To(() => blendShapeWeight, x => blendShapeWeight = x, 100, this._timeToOpenPack).OnUpdate(() => { this.packRenderer.SetBlendShapeWeight(0, blendShapeWeight); }))
+        .Insert(1.0f, DOTween.To(() => blendShapeWeight, x => blendShapeWeight = x, 100, this._timeToOpenPack).SetLink(this.gameObject).OnUpdate(() => { this.packRenderer.SetBlendShapeWeight(0, blendShapeWeight); }))
         .AppendInterval(0.3f)
-        .Append(DOTween.To(() => dissolveAmount, x => dissolveAmount = x, 1.0f, 0.5f).OnUpdate(() => { this.packRenderer.material.SetFloat("_Dissolve_Amount", dissolveAmount); }));
+        .Append(DOTween.To(() => dissolveAmount, x => dissolveAmount = x, 1.0f, 0.5f).SetLink(this.gameObject).OnUpdate(() => { this.packRenderer.material.SetFloat("_Dissolve_Amount", dissolveAmount); })).SetLink(this.gameObject);
 
         openSequence.Play();
     }
@@ -107,7 +107,7 @@ public class CardPack : MonoBehaviour
 
         this.PlayTweenSequence();
 
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1.0f);
 
         this.ActivateParticles();
         this.ActivateCards();

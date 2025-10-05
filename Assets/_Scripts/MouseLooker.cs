@@ -104,6 +104,6 @@ public class MouseLooker : MonoBehaviour
 
     public void ResetRotation()
     {
-        this._resetTween = this._modelTransform.DORotate(Vector3.zero, 0.2f);
+        this._resetTween = this._modelTransform.DORotate(Vector3.zero, 0.2f).SetLink(this.gameObject);
     }
 }
