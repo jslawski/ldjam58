@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PackTest
+  m_Name: common 1
   m_Shader: {fileID: -6465566751694194690, guid: f167423a15ba7fd4ca47a21a995690da,
     type: 3}
   m_Parent: {fileID: 0}
@@ -46,7 +46,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Base_Reflection:
-        m_Texture: {fileID: 2800000, guid: aebd0d86eaa321c44a145324abf0986d, type: 3}
+        m_Texture: {fileID: 2800000, guid: ca498355d8a961846a20f6f663fbd8fe, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Border_Color_Gradient:
@@ -54,7 +54,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Border_Mask:
-        m_Texture: {fileID: 2800000, guid: 485bac35967dba444a8bb3ba1bd97e44, type: 3}
+        m_Texture: {fileID: 2800000, guid: 94db7744a67496e47b00beb51c9d675e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -86,11 +86,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Holo_Border_Mask:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 94db7744a67496e47b00beb51c9d675e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Holo_Color_1:
-        m_Texture: {fileID: 2800000, guid: f2090fa9d50b21c46ae2f368bb83d1c9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 365361127de067b4ea9b874533ac4f49, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Holo_Color_2:
@@ -102,7 +102,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Holo_Mask_1:
-        m_Texture: {fileID: 2800000, guid: 63e63d8d8a77d4748aa303f065099ced, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7344c8aa077dd204ea88cb297eb90eda, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Holo_Mask_2:
@@ -118,11 +118,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Holo_Reflection_Pattern:
-        m_Texture: {fileID: 2800000, guid: ca498355d8a961846a20f6f663fbd8fe, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 15dfd0ae455374745a7d91a2aef3a617, type: 3}
+        m_Texture: {fileID: 2800000, guid: 78187940543cc08439fed4a557350a4d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -235,29 +235,29 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaClip: 1
-    - _AlphaToMask: 1
+    - _AlphaClip: 0
+    - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BlendOp: 0
     - _Border: 5.05
-    - _Border_Color: 0
-    - _Border_Holo_Density: 0.48
+    - _Border_Color: 1
+    - _Border_Holo_Density: 1.3
     - _Border_Holo_Offset: 7.86
     - _Border_Intensity: 0
-    - _Border_Streaks: 1
+    - _Border_Streaks: 0
     - _BumpScale: 1
     - _CastShadows: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cull: 0
+    - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _Dissolve_Amount: 0
-    - _Dissolve_Noise_Toggle: 1
-    - _Dissolve_Scale: 37.69
-    - _Dissolve_Thickness: 0.07
+    - _Dissolve_Noise_Toggle: 0
+    - _Dissolve_Scale: 9.19
+    - _Dissolve_Thickness: 0.17
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -266,10 +266,10 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Holo2_Intensity: 0
-    - _Holo_1_Intensity: 1
+    - _Holo_1_Intensity: 0
     - _Holo_Density: 1.3
     - _Holo_Intensity: 211.1
-    - _Holo_Mask_1_Power: 3
+    - _Holo_Mask_1_Power: 0.4
     - _Holo_Mask_Power: 1.52
     - _Holo_Offset: 0.3
     - _Mask_Holo_on_Border: 0
@@ -296,13 +296,13 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Base_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Border_Holo_Direction: {r: 1, g: 1, b: 0, a: 0}
-    - _Color: {r: 0.43808663, g: 0.109803915, b: 0.58431375, a: 1}
-    - _Dissolve_Edge_Color: {r: 0, g: 1.8325844, b: 4.2870936, a: 1}
+    - _Color: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
+    - _Dissolve_Edge_Color: {r: 0, g: 3.2623081, b: 4.594794, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Holo_Color_1_TileOffset: {r: 1, g: 1, b: 0, a: 0}
     - _Holo_Color_2_TileOffset: {r: 0.15, g: 0.15, b: 0, a: 0}
     - _Holo_Direction: {r: 0.92, g: 0.88, b: 0, a: 0}
     - _Holor_Color_2_TileOffset: {r: 0.15, g: 0.15, b: 0.01, a: 0}
-    - _Reflection_Color: {r: 0, g: 0, b: 0, a: 1}
+    - _Reflection_Color: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
