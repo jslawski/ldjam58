@@ -1,14 +1,12 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-public class HappinessManager : MonoBehaviour
+public class HappinessMeter : MonoBehaviour
 {
-    public static HappinessManager instance;
-
     [SerializeField]
     private RectTransform _barTransform;
 
@@ -19,9 +17,6 @@ public class HappinessManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _currentHealthLabel;
 
-    public int _maxHealth = 1000;
-    public int _currentHealth = 250;
-
     private float _timeToDecreaseHealth = 0.2f;
 
     private Vector3 _originalScale;
@@ -30,39 +25,41 @@ public class HappinessManager : MonoBehaviour
     private Sequence addHealthSequence;
     private Sequence removeHealthSequence;
 
-    private void Awake()
-    {
-        if (instance == null)
-        { 
-            instance = this;
-        }
-
-        CollectionManager.Setup();
-    }
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         this._originalScale = this._barTransform.localScale;
         this._emphasizeScale = this._originalScale * 1.1f;
 
-        this._fillImage.fillAmount = this.GetCurrentFillAmount();
-        this._transitionImage.fillAmount = this.GetCurrentFillAmount();
-        this._currentHealthLabel.text = this._currentHealth.ToString() + " / " + this._maxHealth.ToString();
+        this._fillImage.fillAmount = HappinessManager.instance.GetCurrentFillAmount();
+        this._transitionImage.fillAmount = HappinessManager.instance.GetCurrentFillAmount();
+        this._currentHealthLabel.text = HappinessManager.instance._currentHealth.ToString() + " / " + HappinessManager.instance._maxHealth.ToString();
+
+        this.transform.localScale = Vector3.zero;
+    }
+
+    public void DisplayMeter()
+    {
+        this.transform.localScale = Vector3.zero;
+        this.transform.DOScale(this._originalScale, 0.2f).SetEase(Ease.OutBack);
+    }
+
+    public void HideMeter()
+    {
+        this.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack);
     }
 
     public void AddHealth(int healthToAdd)
     {
-        this._currentHealth = this._currentHealth + healthToAdd;
+        HappinessManager.instance._currentHealth = HappinessManager.instance._currentHealth + healthToAdd;
 
-        int catchUpValue = this._currentHealth - healthToAdd;
+        int catchUpValue = HappinessManager.instance._currentHealth - healthToAdd;
 
-        if (this._currentHealth > this._maxHealth)
+        if (HappinessManager.instance._currentHealth > HappinessManager.instance._maxHealth)
         {
-            this._currentHealth = this._maxHealth;
+            HappinessManager.instance._currentHealth = HappinessManager.instance._maxHealth;
         }
 
-        float targetFillValue = this.GetCurrentFillAmount();
+        float targetFillValue = HappinessManager.instance.GetCurrentFillAmount();
         float currentFillValue = this._fillImage.fillAmount;
 
         StartCoroutine(this.IncrementToCurrentValue(catchUpValue));
@@ -78,21 +75,21 @@ public class HappinessManager : MonoBehaviour
         .Insert(0.0f, DOTween.To(() => currentFillValue, x => currentFillValue = x, targetFillValue, this._timeToDecreaseHealth).SetLink(this.gameObject).OnUpdate(() => { this._transitionImage.fillAmount = currentFillValue; }))
         .Append(returnTween);
 
-        this.addHealthSequence.Play();        
+        this.addHealthSequence.Play();
     }
 
     public void RemoveHealth(int healthToRemove)
     {
-        this._currentHealth = this._currentHealth - healthToRemove;
+        HappinessManager.instance._currentHealth = HappinessManager.instance._currentHealth - healthToRemove;
 
-        int catchUpValue = this._currentHealth + healthToRemove;
+        int catchUpValue = HappinessManager.instance._currentHealth + healthToRemove;
 
-        if (this._currentHealth < 0)
+        if (HappinessManager.instance._currentHealth < 0)
         {
-            this._currentHealth = 0;
+            HappinessManager.instance._currentHealth = 0;
         }
 
-        float targetFillValue = this.GetCurrentFillAmount();
+        float targetFillValue = HappinessManager.instance.GetCurrentFillAmount();
         float currentFillValue = this._fillImage.fillAmount;
         float transitionFillValue = this._fillImage.fillAmount;
 
@@ -115,19 +112,14 @@ public class HappinessManager : MonoBehaviour
         this.removeHealthSequence.Play();
     }
 
-    public float GetCurrentFillAmount()
-    {
-        return (float)this._currentHealth / (float)this._maxHealth;
-    }
-
     private IEnumerator IncrementToCurrentValue(int catchUpValue)
     {
         int amountToIncrement = 5;
 
-        while (catchUpValue < this._currentHealth)
-        {        
+        while (catchUpValue < HappinessManager.instance._currentHealth)
+        {
             catchUpValue += amountToIncrement;
-            this._currentHealthLabel.text = catchUpValue.ToString() + " / " + this._maxHealth.ToString();
+            this._currentHealthLabel.text = catchUpValue.ToString() + " / " + HappinessManager.instance._maxHealth.ToString();
 
             yield return new WaitForFixedUpdate();
         }
@@ -137,10 +129,10 @@ public class HappinessManager : MonoBehaviour
     {
         int amountToDecrement = 5;
 
-        while (catchUpValue > this._currentHealth)
+        while (catchUpValue > HappinessManager.instance._currentHealth)
         {
             catchUpValue -= amountToDecrement;
-            this._currentHealthLabel.text = catchUpValue + " / " + this._maxHealth.ToString();
+            this._currentHealthLabel.text = catchUpValue + " / " + HappinessManager.instance._maxHealth.ToString();
             yield return new WaitForFixedUpdate();
         }
     }

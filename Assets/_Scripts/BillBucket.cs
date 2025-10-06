@@ -47,7 +47,10 @@ public class BillBucket : RedeemBucket
         this._punishmentValueLabel.text = "Punishment: -" + this.billAttributes.punishmentAmount.ToString() + " :(";
 
         this._initialScale = this._currentValueLabel.rectTransform.localScale;
-        this._emphasizedScale = this._initialScale * 1.5f;
+        this._emphasizedScale = this._initialScale * 1.3f;
+
+        this._completedStamp.gameObject.SetActive(false);
+        this._completedStamp.gameObject.transform.localScale = Vector3.one * 3.0f;
     }
 
     public override void RedeemCardValue(int moneyValue, int happyValue)
@@ -97,9 +100,27 @@ public class BillBucket : RedeemBucket
         this.daysRemaining -= 1;
         this._daysRemainingLabel.text = this.daysRemaining.ToString() + " Days Remaining...";
 
-        if (this.daysRemaining <= 0)
+        if (this.daysRemaining <= 0 && this.currentStatus == BillStatus.Active)
         {
             this.currentStatus = BillStatus.Failed;
         }
+    }
+
+    public void TriggerFailedBill()
+    {
+        StartCoroutine(this.FailedBillSequence());
+    }
+
+    private IEnumerator FailedBillSequence()
+    {
+        this.EmphasizeBucket();
+
+        yield return new WaitForSeconds(0.5f);
+
+        HappinessManager.instance.RemoveHealth(this.billAttributes.punishmentAmount);
+
+        yield return new WaitForSeconds(0.5f);
+
+        this.RevertBucket();
     }
 }

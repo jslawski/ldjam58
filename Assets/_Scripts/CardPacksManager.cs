@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CardPacksManager : MonoBehaviour 
+public class CardPacksManager : MonoBehaviour
 {
     public static CardPacksManager instance;
-
-    public int totalPacks = 1;
 
     private Queue<Material> _purchasedPackWrappers;
     private List<List<TradingCardAttributes>> _packCards;
@@ -21,9 +19,12 @@ public class CardPacksManager : MonoBehaviour
     private Vector3 _packTargetPosition = new Vector3(0.0f, 0.0f, -5.0f);
 
     public bool allPacksOpened = false;
-    
+
     [SerializeField]
     private GameObject _summaryManagerPrefab;
+
+    [SerializeField]
+    private GameObject _gameplayElementsParent;
 
     private void Awake()
     {
@@ -39,17 +40,11 @@ public class CardPacksManager : MonoBehaviour
         this.cardRedemptionStatus = new List<List<bool>>();
     }
 
-    private void Start()
+    public void SetupPacks(Queue<Material> packMaterials)
     {
-        Material[] allWrappers = Resources.LoadAll<Material>("PackWrappers");
-
-        for (int i = 0; i < this.totalPacks; i++)
-        {
-            int randomWrapperIndex = Random.Range(0, allWrappers.Length);
-            this.PurchasePack(allWrappers[randomWrapperIndex]);
-        }
-
-        this.PrepareNextPack();
+        this._packCards = new List<List<TradingCardAttributes>>();
+        this.cardRedemptionStatus = new List<List<bool>>();
+        this._purchasedPackWrappers = packMaterials;
     }
 
     private void Update()
@@ -60,9 +55,16 @@ public class CardPacksManager : MonoBehaviour
         }
     }
 
-    public void PurchasePack(Material purchasePackMaterial)
-    { 
-        this._purchasedPackWrappers.Enqueue(purchasePackMaterial);
+    public void StartPackOpeningPhase()
+    {
+        this._gameplayElementsParent.SetActive(true);
+        this.PrepareNextPack();
+    }
+
+    public void EndPackOpeningPhase()
+    {
+        this._gameplayElementsParent.SetActive(false);
+        this.allPacksOpened = false;
     }
 
     public void PrepareNextPack()

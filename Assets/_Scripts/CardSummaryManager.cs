@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
-using JetBrains.Annotations;
 
 public class CardSummaryManager : MonoBehaviour
 {
@@ -124,5 +123,18 @@ public class CardSummaryManager : MonoBehaviour
     public void TriggerEndDay()
     {
         Debug.LogError("ALL CARDS REDEEMED, END OF DAY");
+
+        StartCoroutine(this.StartEndOfDaySequence());
+    }
+
+    private IEnumerator StartEndOfDaySequence()
+    {
+        //Play animation here
+
+        yield return new WaitForSeconds(3.0f);
+
+        BillManager.instance.TriggerExpiredBills();
+
+        Destroy(this.gameObject);
     }
 }

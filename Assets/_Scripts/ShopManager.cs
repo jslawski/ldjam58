@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ShopManager :MonoBehaviour
 {
@@ -26,4 +28,20 @@ public class ShopManager :MonoBehaviour
     { 
         return this._packMaterials.Dequeue();
     }
+
+    public void FinishShopping()
+    {
+        FadeManager.instance.FadeToBlack(this.SetupCardPacksManager);
+    }
+
+    private void SetupCardPacksManager()
+    {
+        CardPacksManager.instance.SetupPacks(this._packMaterials);
+        CardPacksManager.instance.StartPackOpeningPhase();
+
+        FadeManager.instance.FadeFromBlack();
+        Destroy(this.gameObject);
+
+    }
+
 }

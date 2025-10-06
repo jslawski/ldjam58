@@ -80,9 +80,7 @@ public class BillManager : MonoBehaviour
     }
 
     public void UpdateAndReplaceOldBills()
-    {
-        this.DecrementBillDays();
-
+    {    
         for (int i = 0; i < this._allActiveBills.Length; i++)
         {
             if (this._allActiveBills[i].currentStatus == BillStatus.Complete)
@@ -96,5 +94,35 @@ public class BillManager : MonoBehaviour
                 this._allActiveBills[i].Setup(this.GetNewBill(this._allActiveBills[i].billAttributes));
             }
         }
+    }
+
+    public void TriggerExpiredBills()
+    {
+        this.DecrementBillDays();
+        StartCoroutine(this.TriggerBillsInSequence());        
+    }
+
+    private IEnumerator TriggerBillsInSequence()
+    {
+        for (int i = 0; i < this._allActiveBills.Length; i++)
+        {
+            if (this._allActiveBills[i].currentStatus == BillStatus.Failed)
+            {
+                this._allActiveBills[i].TriggerFailedBill();
+            }
+
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        yield return new WaitForSeconds(1.0f);
+
+        FadeManager.instance.FadeToBlack(this.FinishDay);
+    }
+
+    private void FinishDay()
+    {
+        this.UpdateAndReplaceOldBills();
+        CardPacksManager.instance.EndPackOpeningPhase();
+        DayManager.instance.StartDayTransitionSequence();
     }
 }
