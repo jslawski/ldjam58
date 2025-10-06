@@ -24,6 +24,11 @@ public class GameOver : MonoBehaviour
 
     public GameObject gameOverAnimation;
 
+    private AudioChannelSettings _channelSettings;
+
+    public AudioClip thudSound;
+    public AudioClip zoomSound;
+
     private void Awake()
     {
         if (instance == null)
@@ -36,6 +41,9 @@ public class GameOver : MonoBehaviour
         this._daysSurvivedLabel.rectTransform.localScale = Vector3.zero;
         this._playButtonTransform.localScale = Vector3.zero;
         this._backButtonTransform.localScale = Vector3.zero;
+
+        this._channelSettings = new AudioChannelSettings(false, 1.0f, 1.0f, 1.0f, "SFX");
+
     }
 
     public void TriggerGameOver()
@@ -49,25 +57,32 @@ public class GameOver : MonoBehaviour
     {        
         this.gameOverAnimation.SetActive(true);
 
+        AudioManager.instance.Play(this.zoomSound, this._channelSettings);
+
         yield return new WaitForSeconds(1.5f);
 
         this._daysSurvivedLabel.rectTransform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+        AudioManager.instance.Play(this.thudSound, this._channelSettings);
 
         yield return new WaitForSeconds(0.1f);
 
         this._titleLabel.rectTransform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+        AudioManager.instance.Play(this.thudSound, this._channelSettings);
 
         yield return new WaitForSeconds(0.7f);
 
         this._financialValueLabel.rectTransform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+        AudioManager.instance.Play(this.thudSound, this._channelSettings);
 
         yield return new WaitForSeconds(0.5f);
 
         this._playButtonTransform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+        AudioManager.instance.Play(this.zoomSound, this._channelSettings);
 
         yield return new WaitForSeconds(0.1f);
 
         this._backButtonTransform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+        AudioManager.instance.Play(this.zoomSound, this._channelSettings);
     }
 
     public void HideElements()

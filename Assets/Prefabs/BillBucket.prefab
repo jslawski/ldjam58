@@ -90,6 +90,9 @@ MonoBehaviour:
   _currentValueLabel: {fileID: 4652661742686789055}
   _daysRemainingLabel: {fileID: 5778942114054275538}
   _punishmentValueLabel: {fileID: 1832545301626809003}
+  stampSound: {fileID: 8300000, guid: d1c75f143899a7a4e8d6dbe87c15adfa, type: 3}
+  redeemSound: {fileID: 8300000, guid: 2e34fe5741f76174a95ff35ce3248074, type: 3}
+  moneyLoop: {fileID: 8300000, guid: e799c520221eb764b9bdf3e51eb08485, type: 3}
 --- !u!65 &2721609862234339976
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -341,6 +341,10 @@ MonoBehaviour:
   cardAttributes: {fileID: 0}
   _isShowcasing: 0
   redeemed: 0
+  cardZoom: {fileID: 8300000, guid: 1fe9e83d58932e44ca477e45e96714a3, type: 3}
+  cardPickup: {fileID: 8300000, guid: 875f48316976bf14fab4152dd23a754a, type: 3}
+  cardDrop: {fileID: 8300000, guid: 4001dfbf23154874a9599e79c3b556c0, type: 3}
+  cardReturn: {fileID: 8300000, guid: c9cb82e7540a97443859c881e814b16a, type: 3}
 --- !u!1 &8704676366681868104
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,11 +24,19 @@ public class CardSummaryManager : MonoBehaviour
 
     private int _totalRedeemedCards = 0;
 
+    private AudioChannelSettings _channelSettings;
+
+    public AudioClip pageTurn;
+    public AudioClip zoomSound;
+
     private void Awake()
     {
         this._summaryCards = GetComponentsInChildren<SummaryCard>();
 
-        instance = this;        
+        instance = this;
+
+        this._channelSettings = new AudioChannelSettings(false, 1.0f, 1.0f, 0.7f, "SFX");
+
     }
 
     // Start is called before the first frame update
@@ -90,6 +98,8 @@ public class CardSummaryManager : MonoBehaviour
 
         this.DisplayCurrentPack();
 
+        AudioManager.instance.Play(this.pageTurn, this._channelSettings);
+
         if (this._currentPage >= (CardPacksManager.instance.GetNumPacksOpened() - 1))
         {
             this._nextButton.interactable = false;
@@ -107,6 +117,8 @@ public class CardSummaryManager : MonoBehaviour
         this._currentPage--;
 
         this.DisplayCurrentPack();
+
+        AudioManager.instance.Play(this.pageTurn, this._channelSettings);
 
         if (this._currentPage <= 0)
         {
@@ -147,6 +159,8 @@ public class CardSummaryManager : MonoBehaviour
     private IEnumerator StartEndOfDaySequence()
     {
         CardPacksManager.instance.endOfDayObject.SetActive(true);
+
+        AudioManager.instance.Play(this.zoomSound, this._channelSettings);
 
         yield return new WaitForSeconds(1.5f);
 

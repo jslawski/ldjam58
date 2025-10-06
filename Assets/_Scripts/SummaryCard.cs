@@ -57,12 +57,21 @@ public class SummaryCard : MonoBehaviour
 
     private Vector3 _originalScale;
 
+    private AudioChannelSettings _channelSettings;
+
+    public AudioClip cardZoom;
+    public AudioClip cardPickup;
+    public AudioClip cardDrop;
+    public AudioClip cardReturn;
+
     private void Awake()
     {
         this._mouseLooker = GetComponent<MouseLooker>();
         this._rootTransform = GetComponent<Transform>();
 
         this._originalScale = this._rootTransform.localScale;
+
+        this._channelSettings = new AudioChannelSettings(false, 1.0f, 1.0f, 0.5f, "SFX");
     }
 
     void Update()
@@ -137,6 +146,8 @@ public class SummaryCard : MonoBehaviour
         {
             this._ultraRareParticles.Play();
         }
+
+        AudioManager.instance.Play(this.cardZoom, this._channelSettings);
     }
 
     private void ReturnCard()
@@ -148,6 +159,8 @@ public class SummaryCard : MonoBehaviour
 
         this._rareParticles.Stop();
         this._ultraRareParticles.Stop();
+
+        AudioManager.instance.Play(this.cardReturn, this._channelSettings);
     }
 
     public void SetupCard(TradingCardAttributes cardAttributes, int packNum, int cardNum)
@@ -205,6 +218,8 @@ public class SummaryCard : MonoBehaviour
             this._isShowcasing = false;
 
             this._rootTransform.DOScale(this._dragScale, 0.2f).SetEase(Ease.OutBack);
+
+            AudioManager.instance.Play(this.cardPickup, this._channelSettings);
         }
 
         while (Input.GetMouseButton(0) == true)
@@ -261,6 +276,8 @@ public class SummaryCard : MonoBehaviour
 
         this._highlightedRedeemBucket.RedeemCardValue(this.cardAttributes.moneyValue, this.cardAttributes.happyValue);
         this._highlightedRedeemBucket.RevertBucket();
+
+        AudioManager.instance.Play(this.cardDrop, this._channelSettings);
 
         CollectionBucket potentialCollection = this._highlightedRedeemBucket.GetComponent<CollectionBucket>();
         if (potentialCollection != null)

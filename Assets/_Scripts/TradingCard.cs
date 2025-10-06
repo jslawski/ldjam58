@@ -46,7 +46,7 @@ public class TradingCard : MonoBehaviour
         this._rootTransform = this.gameObject.transform;
         this._mouseLooker = GetComponent<MouseLooker>();
 
-        this._channelSettings = new AudioChannelSettings(false, 0.9f, 1.1f, 1.0f, "SFX");
+        this._channelSettings = new AudioChannelSettings(false, 1.0f, 1.0f, 1.0f, "SFX");
     }
 
     public void SetupCard(TradingCardAttributes cardAttributes)

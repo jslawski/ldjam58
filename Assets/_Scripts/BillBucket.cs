@@ -32,8 +32,19 @@ public class BillBucket : RedeemBucket
     private Vector3 _initialScale;
     private Vector3 _emphasizedScale;
 
+    private AudioChannelSettings _nonLoopSettings;
+    private AudioChannelSettings _loopSettings;
+
+    public AudioClip stampSound;
+    public AudioClip redeemSound;
+    public AudioClip moneyLoop;
+
+    int loopId = 0;
+
     public override void DisplayBucket()
     {
+        this._nonLoopSettings = new AudioChannelSettings(false, 1.0f, 1.0f, 1.0f, "SFX");
+        this._loopSettings = new AudioChannelSettings(true, 1.0f, 1.0f, 1.0f, "SFX");
         this.bucketTransform.localScale = Vector3.zero;
         this.bucketTransform.DOScale(Vector3.one * 9.0f, 0.2f).SetEase(Ease.OutBack);
     }
@@ -75,6 +86,11 @@ public class BillBucket : RedeemBucket
         StopAllCoroutines();
         StartCoroutine(this.DecrementToCurrentValue(catchUpValue));
 
+        AudioManager.instance.Stop(this.loopId);
+
+        AudioManager.instance.Play(this.redeemSound, this._nonLoopSettings);
+        this.loopId = AudioManager.instance.Play(this.moneyLoop, this._loopSettings);
+
         if (this.currentValue <= 0)
         {
             this.currentStatus = BillStatus.Complete;
@@ -94,12 +110,15 @@ public class BillBucket : RedeemBucket
             yield return new WaitForFixedUpdate();
         }
 
+        AudioManager.instance.Stop(this.loopId);
+
         this._currentValueLabel.rectTransform.DOScale(this._initialScale, 0.2f).SetEase(Ease.OutBack);
 
         if (this.currentStatus == BillStatus.Complete)
         {
             this._completedStamp.gameObject.SetActive(true);
             this._completedStamp.gameObject.transform.DOScale(Vector3.one * 0.35f, 0.2f).SetEase(Ease.OutBack);
+            AudioManager.instance.Play(this.stampSound, this._nonLoopSettings);
         }
     }
 
@@ -127,6 +146,8 @@ public class BillBucket : RedeemBucket
 
         this._failedStamp.gameObject.SetActive(true);
         this._failedStamp.gameObject.transform.DOScale(Vector3.one * 0.35f, 0.2f).SetEase(Ease.OutBack);
+
+        AudioManager.instance.Play(this.stampSound, this._nonLoopSettings);
 
         yield return new WaitForSeconds(0.5f);
 

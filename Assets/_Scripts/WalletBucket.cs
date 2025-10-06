@@ -13,17 +13,23 @@ public class WalletBucket : RedeemBucket
     private Vector3 _initialScale;
     private Vector3 _emphasizedScale;
 
-    private AudioSource[] _soundEffects;
+    private AudioChannelSettings _channelSettings;
 
-    private void Awake()
-    {
-        this._soundEffects = GetComponents<AudioSource>();
-    }
+    private AudioChannelSettings _nonLoopSettings;
+    private AudioChannelSettings _loopSettings;
+
+    public AudioClip redeemSound;
+    public AudioClip moneyLoop;
+
+    public int loopId = 0;
 
     private void Start()
     {
         this._initialScale = this._currentValueLabel.rectTransform.localScale;
         this._emphasizedScale = this._initialScale * 1.3f;
+
+        this._nonLoopSettings = new AudioChannelSettings(false, 1.0f, 1.0f, 1.0f, "SFX");
+        this._loopSettings = new AudioChannelSettings(true, 1.0f, 1.0f, 1.0f, "SFX");
 
         this.RedeemCardValue(500, 0);
     }
@@ -35,8 +41,10 @@ public class WalletBucket : RedeemBucket
         StopAllCoroutines();
         StartCoroutine(this.IncrementToCurrentValue(this.currentValue - moneyValue));
 
-        this._soundEffects[0].Play();
-        this._soundEffects[1].Play();
+        AudioManager.instance.Stop(this.loopId);
+
+        AudioManager.instance.Play(this.redeemSound, this._nonLoopSettings);
+        this.loopId = AudioManager.instance.Play(this.moneyLoop, this._loopSettings);
     }
 
     public void RemoveMoney(int moneySpent)
@@ -46,8 +54,10 @@ public class WalletBucket : RedeemBucket
         StopAllCoroutines();
         StartCoroutine(this.DecrementToCurrentValue(this.currentValue + moneySpent));
 
-        this._soundEffects[0].Play();
-        this._soundEffects[1].Play();
+        AudioManager.instance.Stop(this.loopId);
+
+        AudioManager.instance.Play(this.redeemSound, this._nonLoopSettings);
+        this.loopId = AudioManager.instance.Play(this.moneyLoop, this._loopSettings);
     }
 
     private IEnumerator IncrementToCurrentValue(int catchUpValue)
@@ -67,7 +77,7 @@ public class WalletBucket : RedeemBucket
 
         this._currentValueLabel.rectTransform.DOScale(this._initialScale, 0.2f).SetEase(Ease.OutBack);
 
-        this._soundEffects[1].Stop();
+        AudioManager.instance.Stop(this.loopId);
     }
 
     private IEnumerator DecrementToCurrentValue(int catchUpValue)
@@ -85,6 +95,6 @@ public class WalletBucket : RedeemBucket
 
         this._currentValueLabel.rectTransform.DOScale(this._initialScale, 0.2f).SetEase(Ease.OutBack);
 
-        this._soundEffects[1].Stop();
+        AudioManager.instance.Stop(this.loopId);
     }
 }

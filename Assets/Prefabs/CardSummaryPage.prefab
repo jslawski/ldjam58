@@ -790,6 +790,8 @@ MonoBehaviour:
   _pageLabel: {fileID: 250378714228934111}
   _prevButton: {fileID: 4452240551272652132}
   _nextButton: {fileID: 2081197176020282904}
+  pageTurn: {fileID: 8300000, guid: 738bcc1f3ea2bfc4b8d18f0d00b080b1, type: 3}
+  zoomSound: {fileID: 8300000, guid: 1fe9e83d58932e44ca477e45e96714a3, type: 3}
 --- !u!1 &8093649124914562163
 GameObject:
   m_ObjectHideFlags: 0

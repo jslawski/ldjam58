@@ -2370,6 +2370,8 @@ MonoBehaviour:
   _currentHealthLabel: {fileID: 1755785787}
   _maxHealth: 1000
   _currentHealth: 250
+  healSound: {fileID: 8300000, guid: 0f31938113a6bae4cb6e4fda2c180309, type: 3}
+  damageSound: {fileID: 8300000, guid: 07bba866f5c315e4e8e2f07055ad3656, type: 3}
 --- !u!1 &1423636774
 GameObject:
   m_ObjectHideFlags: 0
@@ -2492,6 +2494,9 @@ MonoBehaviour:
   _shopPrefab: {fileID: 2773855975824480318, guid: 5c336de0cf3e70346be15b3bc3c78d83,
     type: 3}
   _dayLabel: {fileID: 1764806121}
+  thudSound: {fileID: 8300000, guid: d1c75f143899a7a4e8d6dbe87c15adfa, type: 3}
+  zoomSound: {fileID: 8300000, guid: 1fe9e83d58932e44ca477e45e96714a3, type: 3}
+  damageSound: {fileID: 8300000, guid: 07bba866f5c315e4e8e2f07055ad3656, type: 3}
 --- !u!4 &1493353748 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7086150397082271737, guid: 61376d26525b6ff429545e5c672fc5ee,

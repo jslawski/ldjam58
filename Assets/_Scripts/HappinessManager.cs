@@ -30,6 +30,11 @@ public class HappinessManager : MonoBehaviour
     private Sequence addHealthSequence;
     private Sequence removeHealthSequence;
 
+    private AudioChannelSettings _channelSettings;
+
+    public AudioClip healSound;
+    public AudioClip damageSound;
+
     private void Awake()
     {
         if (instance == null)
@@ -38,6 +43,8 @@ public class HappinessManager : MonoBehaviour
         }
 
         CollectionManager.Setup();
+
+        this._channelSettings = new AudioChannelSettings(false, 1.0f, 1.0f, 1.0f, "SFX");
     }
 
     // Start is called before the first frame update
@@ -69,6 +76,8 @@ public class HappinessManager : MonoBehaviour
             this._currentHealth = this._maxHealth;
         }
 
+        AudioManager.instance.Play(this.healSound, this._channelSettings);
+
         float targetFillValue = this.GetCurrentFillAmount();
         float currentFillValue = this._fillImage.fillAmount;
 
@@ -98,6 +107,8 @@ public class HappinessManager : MonoBehaviour
         {
             this._currentHealth = 0;
         }
+
+        AudioManager.instance.Play(this.damageSound, this._channelSettings);
 
         float targetFillValue = this.GetCurrentFillAmount();
         float currentFillValue = this._fillImage.fillAmount;

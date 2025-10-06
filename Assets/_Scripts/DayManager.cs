@@ -27,6 +27,12 @@ public class DayManager : MonoBehaviour
 
     private Vector3 _labelInitialScale;
 
+    private AudioChannelSettings _channelSettings;
+
+    public AudioClip thudSound;
+    public AudioClip zoomSound;
+    public AudioClip damageSound;
+
     private void Awake()
     {
         if (instance == null)
@@ -35,6 +41,9 @@ public class DayManager : MonoBehaviour
         }        
 
         this._labelInitialScale = this._dayTitleLabel.transform.localScale;
+
+        this._channelSettings = new AudioChannelSettings(false, 1.0f, 1.0f, 1.0f, "SFX");
+
     }
 
     private int GetRandomHealthTax()
@@ -63,7 +72,11 @@ public class DayManager : MonoBehaviour
 
         this._dayTitleLabel.transform.DOScale(targetScale, 0.2f);
 
+        AudioManager.instance.Play(this.thudSound, this._channelSettings);
+
         yield return new WaitForSeconds(1.0f);
+
+        AudioManager.instance.Play(this.thudSound, this._channelSettings);
 
         this._happinessMeter.DisplayMeter();
 
@@ -73,12 +86,16 @@ public class DayManager : MonoBehaviour
 
         this._happinessMeter.RemoveHealth(healthTax);
 
+        AudioManager.instance.Play(this.damageSound, this._channelSettings);
+
         HappinessManager.instance.UpdateMeter();
 
         yield return new WaitForSeconds(2.0f);
 
         this._dayTitleLabel.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack);
         this._happinessMeter.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack);
+
+        AudioManager.instance.Play(this.zoomSound, this._channelSettings);
 
         yield return new WaitForSeconds(0.5f);
 
