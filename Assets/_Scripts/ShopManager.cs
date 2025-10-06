@@ -32,10 +32,13 @@ public class ShopManager :MonoBehaviour
     public void FinishShopping()
     {
         FadeManager.instance.FadeToBlack(this.SetupCardPacksManager);
+
+        MusicManager.instance.FadeToPackMusic();
     }
 
     private void SetupCardPacksManager()
     {
+        CardPacksManager.instance.ChangeBackgroundToOpen();
         CardPacksManager.instance.SetupPacks(this._packMaterials);
         CardPacksManager.instance.StartPackOpeningPhase();
 

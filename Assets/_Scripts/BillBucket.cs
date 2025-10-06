@@ -18,6 +18,8 @@ public class BillBucket : RedeemBucket
     [SerializeField]
     private SpriteRenderer _completedStamp;
     [SerializeField]
+    private SpriteRenderer _failedStamp;
+    [SerializeField]
     private TextMeshProUGUI _billTitle;
     [SerializeField]
     private TextMeshProUGUI _currentValueLabel;
@@ -33,7 +35,7 @@ public class BillBucket : RedeemBucket
     public override void DisplayBucket()
     {
         this.bucketTransform.localScale = Vector3.zero;
-        this.bucketTransform.DOScale(Vector3.one * 8.5f, 0.2f).SetEase(Ease.OutBack);
+        this.bucketTransform.DOScale(Vector3.one * 9.0f, 0.2f).SetEase(Ease.OutBack);
     }
 
     public void Setup(BillAttributes billAttributes)
@@ -53,7 +55,10 @@ public class BillBucket : RedeemBucket
         this._emphasizedScale = this._initialScale * 1.3f;
 
         this._completedStamp.gameObject.SetActive(false);
-        this._completedStamp.gameObject.transform.localScale = Vector3.one * 3.0f;
+        this._completedStamp.gameObject.transform.localScale = Vector3.one * 0.75f;
+
+        this._failedStamp.gameObject.SetActive(false);
+        this._failedStamp.gameObject.transform.localScale = Vector3.one * 0.75f;
     }
 
     public override void RedeemCardValue(int moneyValue, int happyValue)
@@ -94,7 +99,7 @@ public class BillBucket : RedeemBucket
         if (this.currentStatus == BillStatus.Complete)
         {
             this._completedStamp.gameObject.SetActive(true);
-            this._completedStamp.gameObject.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+            this._completedStamp.gameObject.transform.DOScale(Vector3.one * 0.35f, 0.2f).SetEase(Ease.OutBack);
         }
     }
 
@@ -117,6 +122,11 @@ public class BillBucket : RedeemBucket
     private IEnumerator FailedBillSequence()
     {
         this.EmphasizeBucket();
+
+        yield return new WaitForSeconds(0.2f);
+
+        this._failedStamp.gameObject.SetActive(true);
+        this._failedStamp.gameObject.transform.DOScale(Vector3.one * 0.35f, 0.2f).SetEase(Ease.OutBack);
 
         yield return new WaitForSeconds(0.5f);
 

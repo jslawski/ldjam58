@@ -51,6 +51,13 @@ public class HappinessManager : MonoBehaviour
         this._currentHealthLabel.text = this._currentHealth.ToString() + " / " + this._maxHealth.ToString();
     }
 
+    public void UpdateMeter()
+    {
+        this._fillImage.fillAmount = this.GetCurrentFillAmount();
+        this._transitionImage.fillAmount = this.GetCurrentFillAmount();
+        this._currentHealthLabel.text = this._currentHealth.ToString() + " / " + this._maxHealth.ToString();
+    }
+
     public void AddHealth(int healthToAdd)
     {
         this._currentHealth = this._currentHealth + healthToAdd;

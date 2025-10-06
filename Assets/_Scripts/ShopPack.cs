@@ -26,7 +26,7 @@ public class ShopPack : MonoBehaviour
     private Ray _mouseRay;
     private MouseLooker _mouseLooker;
 
-    private Vector3 _dragScale = new Vector3(3.0f, 3.0f, 3.0f);
+    private Vector3 _dragScale = new Vector3(2.5f, 2.5f, 2.5f);
 
     private RaycastHit _hitInfo;
 

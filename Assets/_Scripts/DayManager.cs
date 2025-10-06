@@ -19,6 +19,9 @@ public class DayManager : MonoBehaviour
     [SerializeField]
     private GameObject _shopPrefab;
 
+    [SerializeField]
+    private TextMeshProUGUI _dayLabel;
+
     private int _minHealthTax = 50;
     private int _maxHealthTax = 150;
 
@@ -46,7 +49,7 @@ public class DayManager : MonoBehaviour
     public void StartDayTransitionSequence()
     {
         this._dayTitleLabel.gameObject.SetActive(true);
-        this._dayTitleLabel.text = "End of Day " + this.currentDay.ToString();
+        this._dayTitleLabel.text = "Start of Day " + (this.currentDay + 1).ToString();
         this._happinessMeter.gameObject.SetActive(true);
         StartCoroutine(this.DayTransitionSequence());
     }
@@ -70,6 +73,8 @@ public class DayManager : MonoBehaviour
 
         this._happinessMeter.RemoveHealth(healthTax);
 
+        HappinessManager.instance.UpdateMeter();
+
         yield return new WaitForSeconds(2.0f);
 
         this._dayTitleLabel.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack);
@@ -77,13 +82,26 @@ public class DayManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        Instantiate(this._shopPrefab);
+        if (HappinessManager.instance._currentHealth <= 0)
+        {
+            GameOver.instance.TriggerGameOver();            
+        }
+        else 
+        {
+            Instantiate(this._shopPrefab);
 
-        this._dayTitleLabel.gameObject.SetActive(false);
-        this._happinessMeter.gameObject.SetActive(false);
+            CardPacksManager.instance.ChangeBackgroundToStore();
 
-        FadeManager.instance.FadeFromBlack();
+            this._dayTitleLabel.gameObject.SetActive(false);
+            this._happinessMeter.gameObject.SetActive(false);
 
-        this.currentDay++;
+            FadeManager.instance.FadeFromBlack();
+
+            this.currentDay++;
+
+            this._dayLabel.text = "Day " + this.currentDay.ToString();
+
+            MusicManager.instance.FadeToShopMusic();
+        }
     }
 }

@@ -19,7 +19,7 @@ public class HappinessMeter : MonoBehaviour
 
     private float _timeToDecreaseHealth = 0.2f;
 
-    private Vector3 _originalScale;
+    public Vector3 _originalScale;
     private Vector3 _emphasizeScale;
 
     private Sequence addHealthSequence;
@@ -27,9 +27,6 @@ public class HappinessMeter : MonoBehaviour
 
     private void Start()
     {
-        this._originalScale = this._barTransform.localScale;
-        this._emphasizeScale = this._originalScale * 1.1f;
-
         this._fillImage.fillAmount = HappinessManager.instance.GetCurrentFillAmount();
         this._transitionImage.fillAmount = HappinessManager.instance.GetCurrentFillAmount();
         this._currentHealthLabel.text = HappinessManager.instance._currentHealth.ToString() + " / " + HappinessManager.instance._maxHealth.ToString();
@@ -39,7 +36,14 @@ public class HappinessMeter : MonoBehaviour
 
     public void DisplayMeter()
     {
+        this._emphasizeScale = this._originalScale * 1.1f;
+
+        this._fillImage.fillAmount = HappinessManager.instance.GetCurrentFillAmount();
+        this._transitionImage.fillAmount = HappinessManager.instance.GetCurrentFillAmount();
+        this._currentHealthLabel.text = HappinessManager.instance._currentHealth.ToString() + " / " + HappinessManager.instance._maxHealth.ToString();
+
         this.transform.localScale = Vector3.zero;
+
         this.transform.DOScale(this._originalScale, 0.2f).SetEase(Ease.OutBack);
     }
 

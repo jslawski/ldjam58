@@ -8,6 +8,6 @@ public class CartBucket : RedeemBucket
     public override  void DisplayBucket()    
     {
         this.bucketTransform.localScale = Vector3.zero;
-        this.bucketTransform.DOScale(Vector3.one * 4.0f, 0.2f).SetEase(Ease.OutBack);
+        this.bucketTransform.DOScale(Vector3.one * 9.5f, 0.2f).SetEase(Ease.OutBack);
     }
 }
