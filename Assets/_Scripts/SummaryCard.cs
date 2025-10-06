@@ -25,6 +25,11 @@ public class SummaryCard : MonoBehaviour
     [SerializeField]
     private LayerMask _bucketLayerMask;
 
+    [SerializeField]
+    private ParticleSystem _rareParticles;
+    [SerializeField]
+    private ParticleSystem _ultraRareParticles;
+
     private Ray _mouseRay;
 
     public TradingCardAttributes cardAttributes;
@@ -54,7 +59,7 @@ public class SummaryCard : MonoBehaviour
     {
         this._mouseLooker = GetComponent<MouseLooker>();
         this._rootTransform = GetComponent<Transform>();        
-    }
+    }    
 
     void Update()
     {
@@ -119,6 +124,15 @@ public class SummaryCard : MonoBehaviour
         this._originalPosition = this._rootTransform.position;
         this._rootTransform.DOMove(this._showcasePosition, 0.3f).SetEase(Ease.OutBack);
         this._isShowcasing = true;
+
+        if (cardAttributes.rarity == Rarity.Rare)
+        {
+            this._rareParticles.Play();
+        }
+        else if (cardAttributes.rarity == Rarity.UltraRare)
+        {
+            this._ultraRareParticles.Play();
+        }
     }
 
     private void ReturnCard()
@@ -127,6 +141,9 @@ public class SummaryCard : MonoBehaviour
         this._rootTransform.DOMove(this._originalPosition, 0.3f).SetEase(Ease.OutBack);
         this._isShowcasing = false;
         this._isDragging = false;
+
+        this._rareParticles.Stop();
+        this._ultraRareParticles.Stop();
     }
 
     public void SetupCard(TradingCardAttributes cardAttributes, int packNum, int cardNum)
@@ -142,6 +159,9 @@ public class SummaryCard : MonoBehaviour
 
         this._packNum = packNum;
         this._cardNum = cardNum;
+
+        this._rareParticles.Stop();
+        this._ultraRareParticles.Stop();
     }
 
     public bool IsClickingCard()

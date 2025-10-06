@@ -200,7 +200,7 @@ public class CardPack : MonoBehaviour
             this._cardComponents[i].gameObject.SetActive(false);
         }
 
-        //this.SetWrapperMaterial(packWrapper);
+        this.SetWrapperMaterial(packWrapper);
 
         CardPacksManager.instance.AddCardsToPackCards(this._cardAttributes);
     }
@@ -254,7 +254,7 @@ public class CardPack : MonoBehaviour
 
     public void SetWrapperMaterial(Material wrapperRenderer)
     {
-        //this.packRenderer.material = wrapperRenderer;
+        this.packRenderer.material = wrapperRenderer;
     }
     public bool IsClickingPack()
     {
