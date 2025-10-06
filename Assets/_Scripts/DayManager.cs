@@ -32,7 +32,7 @@ public class DayManager : MonoBehaviour
     public AudioClip thudSound;
     public AudioClip zoomSound;
     public AudioClip damageSound;
-
+    public AudioClip welcome;
     private void Awake()
     {
         if (instance == null)
@@ -119,6 +119,8 @@ public class DayManager : MonoBehaviour
             this._dayLabel.text = "Day " + this.currentDay.ToString();
 
             MusicManager.instance.FadeToShopMusic();
+
+            AudioManager.instance.Play(this.welcome, this._channelSettings);
         }
     }
 }

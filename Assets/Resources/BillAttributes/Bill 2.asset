@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Bill 2
   m_EditorClassIdentifier: 
   title: Hospital Fees
-  billImage: {fileID: 21300000, guid: b962cb385e72f6f438816b4a096c5b6f, type: 3}
-  targetAmount: 1500
+  targetAmount: 1000
   daysToComplete: 3
-  punishmentAmount: 50
+  punishmentAmount: 300

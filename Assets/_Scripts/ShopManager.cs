@@ -10,6 +10,10 @@ public class ShopManager :MonoBehaviour
 
     public Queue<Material> _packMaterials;
 
+    private AudioChannelSettings _channelSettings;
+
+    public AudioClip thanks;
+
     private void Awake()
     {
         if (instance == null)
@@ -17,6 +21,8 @@ public class ShopManager :MonoBehaviour
             instance = this;
         }
         this._packMaterials = new Queue<Material>();
+
+        _channelSettings = new AudioChannelSettings();
     }
 
     public void PurchasePack(Material purchasedMaterial)
@@ -34,6 +40,8 @@ public class ShopManager :MonoBehaviour
         FadeManager.instance.FadeToBlack(this.SetupCardPacksManager);
 
         MusicManager.instance.FadeToPackMusic();
+
+        AudioManager.instance.Play(this.thanks, this._channelSettings);
     }
 
     private void SetupCardPacksManager()

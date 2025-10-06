@@ -40,11 +40,11 @@ public class ShopPack : MonoBehaviour
 
     private RedeemBucket _highlightedRedeemBucket;
 
-    private int _minPackPrice = 100;
+    private int _minPackPrice = 50;
 
-    private int _maxPackPrice = 200;
+    private int _maxPackPrice = 120;
 
-    public int packPrice = 100;
+    public int packPrice = 50;
 
     private WalletBucket _playerWallet;
 
@@ -66,7 +66,7 @@ public class ShopPack : MonoBehaviour
 
         this._originalScale = this._rootTransform.localScale;
 
-        this._channelSettings = new AudioChannelSettings(false, 0.9f, 1.1f, 0.5f, "SFX");
+        this._channelSettings = new AudioChannelSettings(false, 1.0f, 1.0f, 0.5f, "SFX");
     }
 
     private void Start()
