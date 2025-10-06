@@ -43,6 +43,8 @@ public class CardPack : MonoBehaviour
 
     private float _timeToOpenPack = 0.3f;
 
+    private AudioSource _soundEffect;
+
     private void Awake()
     {
         this._rootTransform = this.gameObject.transform;
@@ -62,6 +64,10 @@ public class CardPack : MonoBehaviour
         }
 
         DOTween.Init();
+
+        this._soundEffect = GetComponent<AudioSource>();
+
+        
     }
 
     private void Update()
@@ -82,8 +88,8 @@ public class CardPack : MonoBehaviour
 
     private void PlayTweenSequence()
     {
-        Tweener shakeTween = this._rootTransform.DOShakePosition(0.75f, 0.15f, 25, 90, false, false).SetLink(this.gameObject);
-        Tweener shrinkTween = this._rootTransform.DOScale(0.75f, 0.75f).SetLink(this.gameObject);
+        Tweener shakeTween = this._rootTransform.DOShakePosition(1.2f, 0.15f, 25, 90, false, false).SetLink(this.gameObject);
+        Tweener shrinkTween = this._rootTransform.DOScale(0.75f, 1.2f).SetLink(this.gameObject);
 
         float blendShapeWeight = 0.0f;
         Tweener growTween = this._rootTransform.DOScale(1.0f, this._timeToOpenPack).SetEase(Ease.OutBack, 20.0f).SetLink(this.gameObject);
@@ -95,7 +101,7 @@ public class CardPack : MonoBehaviour
         openSequence.Append(shakeTween)
         .Insert(0.0f, shrinkTween)
         .Append(growTween)
-        .Insert(0.75f, DOTween.To(() => blendShapeWeight, x => blendShapeWeight = x, 100, this._timeToOpenPack).SetLink(this.gameObject).OnUpdate(() => { this.packRenderer.SetBlendShapeWeight(0, blendShapeWeight); }))
+        .Insert(1.2f, DOTween.To(() => blendShapeWeight, x => blendShapeWeight = x, 100, this._timeToOpenPack).SetLink(this.gameObject).OnUpdate(() => { this.packRenderer.SetBlendShapeWeight(0, blendShapeWeight); }))
         .AppendInterval(0.2f)
         .Append(DOTween.To(() => dissolveAmount, x => dissolveAmount = x, 1.0f, 0.5f).SetLink(this.gameObject).OnUpdate(() => { this.packRenderer.material.SetFloat("_Dissolve_Amount", dissolveAmount); })).SetLink(this.gameObject);
 
@@ -107,9 +113,11 @@ public class CardPack : MonoBehaviour
         GetComponent<MouseLooker>().DisableMouseLook();
         this._collider.enabled = false;
 
+        this._soundEffect.Play();
+
         this.PlayTweenSequence();
 
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(1.2f);
 
         this.ActivateParticles();
         this.ActivateCards();

@@ -25,9 +25,9 @@ public class MusicManager : MonoBehaviour
     public void FadeToShopMusic()
     {
         float newSongVolume = 0.0f;
-        float oldSongVolume = 1.0f;
+        float oldSongVolume = 0.5f;
 
-        DOTween.To(() => newSongVolume, x => newSongVolume = x, 1.0f, this.timeToFade).OnUpdate(() =>
+        DOTween.To(() => newSongVolume, x => newSongVolume = x, 0.5f, this.timeToFade).OnUpdate(() =>
         {
             this.shopMusic.volume = newSongVolume;
         });
@@ -41,9 +41,9 @@ public class MusicManager : MonoBehaviour
     public void FadeToPackMusic()
     {
         float newSongVolume = 0.0f;
-        float oldSongVolume = 1.0f;
+        float oldSongVolume = 0.5f;
 
-        DOTween.To(() => newSongVolume, x => newSongVolume = x, 1.0f, this.timeToFade).OnUpdate(() =>
+        DOTween.To(() => newSongVolume, x => newSongVolume = x, 0.5f, this.timeToFade).OnUpdate(() =>
         {
             this.unpackMusic.volume = newSongVolume;
         });
@@ -57,9 +57,9 @@ public class MusicManager : MonoBehaviour
     public void FadeToSummaryMusic()
     {
         float newSongVolume = 0.0f;
-        float oldSongVolume = 1.0f;
+        float oldSongVolume = 0.5f;
 
-        DOTween.To(() => newSongVolume, x => newSongVolume = x, 1.0f, this.timeToFade).OnUpdate(() =>
+        DOTween.To(() => newSongVolume, x => newSongVolume = x, 0.5f, this.timeToFade).OnUpdate(() =>
         {
             this.summaryMusic.volume = newSongVolume;
         });
@@ -73,9 +73,9 @@ public class MusicManager : MonoBehaviour
     public void FadeToEndOfDayMusic()
     {
         float newSongVolume = 0.0f;
-        float oldSongVolume = 1.0f;
+        float oldSongVolume = 0.5f;
 
-        DOTween.To(() => newSongVolume, x => newSongVolume = x, 1.0f, this.timeToFade).OnUpdate(() =>
+        DOTween.To(() => newSongVolume, x => newSongVolume = x, 0.5f, this.timeToFade).OnUpdate(() =>
         {
             this.endOfDayMusic.volume = newSongVolume;
         });

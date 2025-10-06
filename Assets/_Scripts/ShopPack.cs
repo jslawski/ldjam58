@@ -50,6 +50,12 @@ public class ShopPack : MonoBehaviour
 
     private Vector3 _originalScale;
 
+    private AudioChannelSettings _channelSettings;
+
+    public AudioClip pickupPack;
+    public AudioClip dropOffPack;
+    public AudioClip returnPack;
+
     private void Awake()
     {
         this._allPackMaterials = Resources.LoadAll<Material>("PackWrappers");
@@ -59,6 +65,8 @@ public class ShopPack : MonoBehaviour
         this._playerWallet = GameObject.Find("WalletBucket").GetComponent<WalletBucket>();
 
         this._originalScale = this._rootTransform.localScale;
+
+        this._channelSettings = new AudioChannelSettings(false, 0.9f, 1.1f, 0.5f, "SFX");
     }
 
     private void Start()
@@ -141,6 +149,8 @@ public class ShopPack : MonoBehaviour
 
         ShopManager.instance.PurchasePack(this._packRenderer.material);
         this._playerWallet.RemoveMoney(this.packPrice);
+
+        AudioManager.instance.Play(this.dropOffPack, this._channelSettings);
     }
 
     private void ReturnCard()
@@ -148,6 +158,8 @@ public class ShopPack : MonoBehaviour
         this._rootTransform.DOScale(this._originalScale, 0.2f).SetEase(Ease.OutBack);
         this._rootTransform.DOMove(this._originalPosition, 0.3f).SetEase(Ease.OutBack);
         this._isDragging = false;
+
+        AudioManager.instance.Play(this.returnPack, this._channelSettings);
     }
 
     public bool IsClickingCard()
@@ -186,6 +198,8 @@ public class ShopPack : MonoBehaviour
             this._isDragging = true;
 
             this._rootTransform.DOScale(this._dragScale, 0.2f).SetEase(Ease.OutBack);
+
+            AudioManager.instance.Play(this.pickupPack, this._channelSettings);
         }
 
         while (Input.GetMouseButton(0) == true)

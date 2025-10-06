@@ -293,6 +293,9 @@ MonoBehaviour:
     m_Bits: 0
   _priceLabel: {fileID: 3909472458845286234}
   packPrice: 200
+  pickupPack: {fileID: 8300000, guid: de7aaea9eaa830b4b841ece77a962841, type: 3}
+  dropOffPack: {fileID: 8300000, guid: 875f48316976bf14fab4152dd23a754a, type: 3}
+  returnPack: {fileID: 8300000, guid: c9cb82e7540a97443859c881e814b16a, type: 3}
 --- !u!114 &1757547318980262290
 MonoBehaviour:
   m_ObjectHideFlags: 0

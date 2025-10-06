@@ -13,6 +13,13 @@ public class WalletBucket : RedeemBucket
     private Vector3 _initialScale;
     private Vector3 _emphasizedScale;
 
+    private AudioSource[] _soundEffects;
+
+    private void Awake()
+    {
+        this._soundEffects = GetComponents<AudioSource>();
+    }
+
     private void Start()
     {
         this._initialScale = this._currentValueLabel.rectTransform.localScale;
@@ -27,6 +34,9 @@ public class WalletBucket : RedeemBucket
 
         StopAllCoroutines();
         StartCoroutine(this.IncrementToCurrentValue(this.currentValue - moneyValue));
+
+        this._soundEffects[0].Play();
+        this._soundEffects[1].Play();
     }
 
     public void RemoveMoney(int moneySpent)
@@ -35,6 +45,9 @@ public class WalletBucket : RedeemBucket
 
         StopAllCoroutines();
         StartCoroutine(this.DecrementToCurrentValue(this.currentValue + moneySpent));
+
+        this._soundEffects[0].Play();
+        this._soundEffects[1].Play();
     }
 
     private IEnumerator IncrementToCurrentValue(int catchUpValue)
@@ -53,6 +66,8 @@ public class WalletBucket : RedeemBucket
         }
 
         this._currentValueLabel.rectTransform.DOScale(this._initialScale, 0.2f).SetEase(Ease.OutBack);
+
+        this._soundEffects[1].Stop();
     }
 
     private IEnumerator DecrementToCurrentValue(int catchUpValue)
@@ -69,5 +84,7 @@ public class WalletBucket : RedeemBucket
         }
 
         this._currentValueLabel.rectTransform.DOScale(this._initialScale, 0.2f).SetEase(Ease.OutBack);
+
+        this._soundEffects[1].Stop();
     }
 }

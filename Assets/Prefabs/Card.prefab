@@ -212,6 +212,8 @@ MonoBehaviour:
   _rareParticles: {fileID: 4950865605932595598}
   _ultraRareParticles: {fileID: 900160299650743871}
   cardAttributes: {fileID: 0}
+  cardLeave: {fileID: 8300000, guid: a32d0656696ab9540898484a6238be0c, type: 3}
+  cardZoom: {fileID: 8300000, guid: 1fe9e83d58932e44ca477e45e96714a3, type: 3}
 --- !u!114 &6001296286899611475
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -36,10 +36,17 @@ public class TradingCard : MonoBehaviour
 
     private MouseLooker _mouseLooker;
 
+    private AudioChannelSettings _channelSettings;
+
+    public AudioClip cardLeave;
+    public AudioClip cardZoom;
+
     private void Awake()
     {
         this._rootTransform = this.gameObject.transform;
         this._mouseLooker = GetComponent<MouseLooker>();
+
+        this._channelSettings = new AudioChannelSettings(false, 0.9f, 1.1f, 1.0f, "SFX");
     }
 
     public void SetupCard(TradingCardAttributes cardAttributes)
@@ -58,6 +65,8 @@ public class TradingCard : MonoBehaviour
 
     private IEnumerator SetupShowcase()
     {
+        AudioManager.instance.Play(this.cardZoom, this._channelSettings);
+
         this._rootTransform.DOMove(this._showcasePosition, 0.3f).SetEase(Ease.OutBack).SetLink(this.gameObject).OnComplete(this.PlayParticles());
 
         yield return new WaitForSeconds(0.3f);
@@ -99,6 +108,8 @@ public class TradingCard : MonoBehaviour
         this._isShowcasing = false;
 
         this._mouseLooker.DisableMouseLook();
+
+        AudioManager.instance.Play(this.cardLeave, this._channelSettings);
     }
 
     private void Update()
