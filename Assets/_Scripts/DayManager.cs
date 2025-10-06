@@ -82,17 +82,24 @@ public class DayManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        Instantiate(this._shopPrefab);
+        if (HappinessManager.instance._currentHealth <= 0)
+        {
+            GameOver.instance.TriggerGameOver();            
+        }
+        else 
+        {
+            Instantiate(this._shopPrefab);
 
-        CardPacksManager.instance.ChangeBackgroundToStore();
+            CardPacksManager.instance.ChangeBackgroundToStore();
 
-        this._dayTitleLabel.gameObject.SetActive(false);
-        this._happinessMeter.gameObject.SetActive(false);
+            this._dayTitleLabel.gameObject.SetActive(false);
+            this._happinessMeter.gameObject.SetActive(false);
 
-        FadeManager.instance.FadeFromBlack();
+            FadeManager.instance.FadeFromBlack();
 
-        this.currentDay++;
+            this.currentDay++;
 
-        this._dayLabel.text = "Day " + this.currentDay.ToString();
+            this._dayLabel.text = "Day " + this.currentDay.ToString();
+        }
     }
 }

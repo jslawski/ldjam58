@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
@@ -12,10 +15,14 @@ public class GameOver : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _financialValueLabel;
     [SerializeField]
-    private TextMeshProUGUI _happinessCollectedLabel;
+    private TextMeshProUGUI _daysSurvivedLabel;
 
-    //Game Over triggers when    
-    //Your happiness reaches 0 at the end of the day
+    [SerializeField]
+    private RectTransform _playButtonTransform;
+    [SerializeField]
+    private RectTransform _backButtonTransform;
+
+    public GameObject gameOverAnimation;
 
     private void Awake()
     {
@@ -23,10 +30,80 @@ public class GameOver : MonoBehaviour
         {
             instance = this;
         }
+
+        this._titleLabel.rectTransform.localScale = Vector3.zero;
+        this._financialValueLabel.rectTransform.localScale = Vector3.zero;
+        this._daysSurvivedLabel.rectTransform.localScale = Vector3.zero;
+        this._playButtonTransform.localScale = Vector3.zero;
+        this._backButtonTransform.localScale = Vector3.zero;
     }
 
     public void TriggerGameOver()
-    { 
-        
+    {
+        this._daysSurvivedLabel.text = "<color=red>" + DayManager.instance.currentDay.ToString() + "</color> Days";
+        this._financialValueLabel.text = "Personal Collection Value:\n" + "<color=red>$" + CollectionManager.GetCollectionTotalMoneyValue().ToString() + "</color>";
+        StartCoroutine(this.GameOverFlow());
+    }
+
+    private IEnumerator GameOverFlow()
+    {        
+        this.gameOverAnimation.SetActive(true);
+
+        yield return new WaitForSeconds(1.5f);
+
+        this._daysSurvivedLabel.rectTransform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+
+        yield return new WaitForSeconds(0.1f);
+
+        this._titleLabel.rectTransform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+
+        yield return new WaitForSeconds(0.7f);
+
+        this._financialValueLabel.rectTransform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+
+        yield return new WaitForSeconds(0.5f);
+
+        this._playButtonTransform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+
+        yield return new WaitForSeconds(0.1f);
+
+        this._backButtonTransform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+    }
+
+    public void HideElements()
+    {
+        this._daysSurvivedLabel.rectTransform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack);
+        this._titleLabel.rectTransform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack);
+        this._financialValueLabel.rectTransform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack);
+        this._playButtonTransform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack);
+        this._backButtonTransform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack);
+    }
+
+    public void PlayButtonPressed()
+    {
+        StartCoroutine(this.PlayButtonFlow());
+    }
+
+    public void QuitButtonPressed()
+    {
+        StartCoroutine(this.QuitButtonFlow());
+    }
+
+    private IEnumerator PlayButtonFlow()
+    {
+        this.HideElements();
+
+        yield return new WaitForSeconds(0.3f);
+
+        SceneManager.LoadScene("JaredScene");
+    }
+
+    private IEnumerator QuitButtonFlow()
+    {
+        this.HideElements();
+
+        yield return new WaitForSeconds(0.3f);
+
+        SceneManager.LoadScene("MainMenu");
     }
 }

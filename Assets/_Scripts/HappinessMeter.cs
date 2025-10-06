@@ -44,8 +44,6 @@ public class HappinessMeter : MonoBehaviour
 
         this.transform.localScale = Vector3.zero;
 
-        Debug.LogError("Transitioning to " + this._originalScale);
-
         this.transform.DOScale(this._originalScale, 0.2f).SetEase(Ease.OutBack);
     }
 
