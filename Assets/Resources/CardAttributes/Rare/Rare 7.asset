@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rarity: 2
   cardMaterial: {fileID: 2100000, guid: 402059db59b625a41bbc516cccd7b095, type: 2}
-  moneyValue: 1000
-  happyValue: 800
+  moneyValue: 100
+  happyValue: 200

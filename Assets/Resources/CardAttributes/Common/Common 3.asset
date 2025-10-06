@@ -15,4 +15,4 @@ MonoBehaviour:
   rarity: 0
   cardMaterial: {fileID: 2100000, guid: 2a9e5b49a98eefb439d1ddcb191d209a, type: 2}
   moneyValue: 50
-  happyValue: 150
+  happyValue: 50
