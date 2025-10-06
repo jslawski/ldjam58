@@ -63,7 +63,7 @@ public class SummaryCard : MonoBehaviour
         this._rootTransform = GetComponent<Transform>();
 
         this._originalScale = this._rootTransform.localScale;
-    }    
+    }
 
     void Update()
     {

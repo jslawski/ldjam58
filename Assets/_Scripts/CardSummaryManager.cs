@@ -41,11 +41,25 @@ public class CardSummaryManager : MonoBehaviour
         if (CardPacksManager.instance.GetNumPacksOpened() > 1)
         {
             this._nextButton.interactable = true;
-        }        
+        }
+
+        if (CardPacksManager.instance.GetNumPacksOpened() <= 0)
+        {
+            this.TriggerEndDay();
+        }
     }
 
     private void DisplayCurrentPack()
     {
+        if (CardPacksManager.instance.GetNumPacksOpened() <= 0)
+        {
+            for (int i = 0; i < this._summaryCards.Length; i++)
+            {
+                this._summaryCards[i].gameObject.SetActive(false);
+            }
+
+            return;
+        }
         List<TradingCardAttributes> packCards = CardPacksManager.instance.GetPackCards(this._currentPage);
 
         for (int i = 0; i < this._summaryCards.Length; i++)

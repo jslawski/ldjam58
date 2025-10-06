@@ -56,7 +56,7 @@ public class CardPacksManager : MonoBehaviour
     }
 
     public void StartPackOpeningPhase()
-    {
+    {        
         this._gameplayElementsParent.SetActive(true);
         this.PrepareNextPack();
     }
@@ -69,6 +69,12 @@ public class CardPacksManager : MonoBehaviour
 
     public void PrepareNextPack()
     {
+        if (this._purchasedPackWrappers.Count == 0)
+        {
+            SetupSummaryManager();
+            return;
+        }
+        
         CardPack newPack = Instantiate(this._cardPackPrefab, this._packSpawnPosition, new Quaternion()).GetComponent<CardPack>();
         newPack.GeneratePack(this._purchasedPackWrappers.Dequeue());
 

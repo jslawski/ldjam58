@@ -15,5 +15,5 @@ MonoBehaviour:
   title: Family is Hungry
   billImage: {fileID: 21300000, guid: 948cb3ad85932204d9e138b9f00fba78, type: 3}
   targetAmount: 300
-  daysToComplete: 0
+  daysToComplete: 2
   punishmentAmount: 100

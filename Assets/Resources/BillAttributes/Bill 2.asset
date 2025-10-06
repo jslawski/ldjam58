@@ -15,5 +15,5 @@ MonoBehaviour:
   title: Hospital Fees
   billImage: {fileID: 21300000, guid: b962cb385e72f6f438816b4a096c5b6f, type: 3}
   targetAmount: 1500
-  daysToComplete: 10
+  daysToComplete: 3
   punishmentAmount: 50
