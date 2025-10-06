@@ -18,6 +18,11 @@ public class TradingCard : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _happyValueLabel;
 
+    [SerializeField]
+    private ParticleSystem _rareParticles;
+    [SerializeField]
+    private ParticleSystem _ultraRareParticles;
+
     private float lookSpeed = 10.0f;
     private Vector3 _showcasePosition = new Vector3(0.0f, 0.0f, -7.5f);    
     private Vector3 _dismissPosition = new Vector3(-5.0f, 5f, 0.0f);   
@@ -53,7 +58,7 @@ public class TradingCard : MonoBehaviour
 
     private IEnumerator SetupShowcase()
     {
-        this._rootTransform.DOMove(this._showcasePosition, 0.3f).SetEase(Ease.OutBack).SetLink(this.gameObject);
+        this._rootTransform.DOMove(this._showcasePosition, 0.3f).SetEase(Ease.OutBack).SetLink(this.gameObject).OnComplete(this.PlayParticles());
 
         yield return new WaitForSeconds(0.3f);
 
@@ -62,11 +67,33 @@ public class TradingCard : MonoBehaviour
         this._isShowcasing = true;
     }
 
+    private TweenCallback PlayParticles()
+    {
+        if (this.cardAttributes.rarity == Rarity.Rare)
+        {
+            this._rareParticles.Play();        
+        }
+        else if (this.cardAttributes.rarity == Rarity.UltraRare)
+        {
+             this._ultraRareParticles.Play();
+        }
+
+        return null;
+    }
+
+    private TweenCallback StopParticles()
+    {
+        this._rareParticles.Stop();
+        this._ultraRareParticles.Stop();
+
+        return null;
+    }
+
     public void DismissCard()
     {
         this._rootTransform.DOKill();    
 
-        this._rootTransform.DOLocalMove(this._dismissPosition, 0.3f).SetLink(this.gameObject);
+        this._rootTransform.DOLocalMove(this._dismissPosition, 0.3f).SetLink(this.gameObject).OnComplete(this.StopParticles());
         this._rootTransform.DOLocalRotate(this._dismissRotation, 0.3f).SetLink(this.gameObject);
 
         this._isShowcasing = false;

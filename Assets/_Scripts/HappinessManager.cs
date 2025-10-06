@@ -40,6 +40,18 @@ public class HappinessManager : MonoBehaviour
         CollectionManager.Setup();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            this.AddHealth(100);
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            this.RemoveHealth(100);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,8 +92,6 @@ public class HappinessManager : MonoBehaviour
 
         this.addHealthSequence.Play();        
     }
-
-
 
     public void RemoveHealth(int healthToRemove)
     {
@@ -126,12 +136,11 @@ public class HappinessManager : MonoBehaviour
     {
         int amountToIncrement = 5;
 
-        yield return new WaitForSeconds(0.2f);
-
         while (catchUpValue < this._currentHealth)
-        {
+        {        
             catchUpValue += amountToIncrement;
-            this._currentHealthLabel.text = this._currentHealth.ToString() + " / " + this._maxHealth.ToString();
+            this._currentHealthLabel.text = catchUpValue.ToString() + " / " + this._maxHealth.ToString();
+
             yield return new WaitForFixedUpdate();
         }
     }
@@ -140,12 +149,10 @@ public class HappinessManager : MonoBehaviour
     {
         int amountToDecrement = 5;
 
-        yield return new WaitForSeconds(0.2f);
-
         while (catchUpValue > this._currentHealth)
         {
             catchUpValue -= amountToDecrement;
-            this._currentHealthLabel.text = this._currentHealth.ToString() + " / " + this._maxHealth.ToString();
+            this._currentHealthLabel.text = catchUpValue + " / " + this._maxHealth.ToString();
             yield return new WaitForFixedUpdate();
         }
     }

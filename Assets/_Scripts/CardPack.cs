@@ -34,6 +34,8 @@ public class CardPack : MonoBehaviour
 
     [SerializeField]
     private GameObject _particleObject;
+    [SerializeField]
+    private ParticleSystem _burstParticleSystem;
 
     private float _uncommonPullChance = 0.30f;
     private float _rarePullChance = 0.15f;
@@ -112,6 +114,10 @@ public class CardPack : MonoBehaviour
         this.ActivateParticles();
         this.ActivateCards();
 
+        yield return new WaitForSeconds(0.1f);
+
+        this._burstParticleSystem.Play();
+
         yield return new WaitForSeconds(1.0f);
 
         this.ShowcaseFirstCard();
@@ -134,6 +140,8 @@ public class CardPack : MonoBehaviour
     {
         this._showcasingCard = this._cards.Dequeue();
         this._showcasingCard.ShowcaseCard();
+
+        this._burstParticleSystem.Play();
     }
 
     private IEnumerator DisplayNextCard()
@@ -148,6 +156,9 @@ public class CardPack : MonoBehaviour
         {
             this._showcasingCard = this._cards.Dequeue();
             this._showcasingCard.ShowcaseCard();
+
+            this._burstParticleSystem.Stop();
+            this._burstParticleSystem.Play();
         }
         else
         {
