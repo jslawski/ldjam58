@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Speed Dating Service
   targetAmount: 200
-  daysToComplete: 1
+  daysToComplete: 2
   punishmentAmount: 100

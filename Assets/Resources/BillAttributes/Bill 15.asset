@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Lasso Lessons
   targetAmount: 100
-  daysToComplete: 1
+  daysToComplete: 2
   punishmentAmount: 50

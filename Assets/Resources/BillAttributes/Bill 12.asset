@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Virus Removal Gift Cards
   targetAmount: 200
-  daysToComplete: 1
+  daysToComplete: 3
   punishmentAmount: 50
