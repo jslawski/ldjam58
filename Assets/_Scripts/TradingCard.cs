@@ -24,7 +24,7 @@ public class TradingCard : MonoBehaviour
     private ParticleSystem _ultraRareParticles;
 
     private float lookSpeed = 10.0f;
-    private Vector3 _showcasePosition = new Vector3(0.0f, 0.0f, -7.5f);    
+    private Vector3 _showcasePosition = new Vector3(0.0f, 0.0f, -7.25f);    
     private Vector3 _dismissPosition = new Vector3(-5.0f, 5f, 0.0f);   
     private Vector3 _dismissRotation = new Vector3(0.0f, 0.0f, 80.0f);
     private Vector2 _maxDistanceThresholds = new Vector2(0.1f, 0.3f);    

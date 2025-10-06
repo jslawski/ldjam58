@@ -19,6 +19,9 @@ public class DayManager : MonoBehaviour
     [SerializeField]
     private GameObject _shopPrefab;
 
+    [SerializeField]
+    private TextMeshProUGUI _dayLabel;
+
     private int _minHealthTax = 50;
     private int _maxHealthTax = 150;
 
@@ -85,5 +88,7 @@ public class DayManager : MonoBehaviour
         FadeManager.instance.FadeFromBlack();
 
         this.currentDay++;
+
+        this._dayLabel.text = "Day " + this.currentDay.ToString();
     }
 }

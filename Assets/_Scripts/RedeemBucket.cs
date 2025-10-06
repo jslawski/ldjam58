@@ -15,7 +15,7 @@ public class RedeemBucket : MonoBehaviour
     {
         this.bucketTransform = GetComponent<Transform>();
         this._originalScale = transform.localScale;
-        this._targetScale = this.bucketTransform.localScale * 1.5f;
+        this._targetScale = this.bucketTransform.localScale * 1.3f;
     }
 
     private void Start()

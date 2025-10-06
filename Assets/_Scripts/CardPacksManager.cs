@@ -26,6 +26,12 @@ public class CardPacksManager : MonoBehaviour
     [SerializeField]
     private GameObject _gameplayElementsParent;
 
+    public SpriteRenderer backgroundSprite;
+    public Sprite shopBackground;
+    public Sprite packOpenBackground;
+
+    public GameObject endOfDayObject;
+
     private void Awake()
     {
         if (instance == null)
@@ -41,10 +47,20 @@ public class CardPacksManager : MonoBehaviour
     }
 
     public void SetupPacks(Queue<Material> packMaterials)
-    {
+    {        
         this._packCards = new List<List<TradingCardAttributes>>();
         this.cardRedemptionStatus = new List<List<bool>>();
         this._purchasedPackWrappers = packMaterials;
+    }
+
+    public void ChangeBackgroundToOpen()
+    {
+        this.backgroundSprite.sprite = this.packOpenBackground;
+    }
+
+    public void ChangeBackgroundToStore()
+    {
+        this.backgroundSprite.sprite = this.shopBackground;
     }
 
     private void Update()

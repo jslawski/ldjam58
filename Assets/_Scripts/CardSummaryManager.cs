@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class CardSummaryManager : MonoBehaviour
 {
@@ -120,8 +121,8 @@ public class CardSummaryManager : MonoBehaviour
     }
 
     private void UpdatePageLabel()
-    { 
-        this._pageLabel.text = "Pack #" + (this._currentPage + 1);
+    {
+        this._pageLabel.text = (this._currentPage + 1) + " / " + CardPacksManager.instance.GetNumPacksOpened().ToString();
     }
 
     public void IncrementRedeemedCardCount()
@@ -143,9 +144,11 @@ public class CardSummaryManager : MonoBehaviour
 
     private IEnumerator StartEndOfDaySequence()
     {
-        //Play animation here
+        CardPacksManager.instance.endOfDayObject.SetActive(true);
 
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.5f);
+
+        CardPacksManager.instance.endOfDayObject.SetActive(false);
 
         BillManager.instance.TriggerExpiredBills();
 

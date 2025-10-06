@@ -36,6 +36,7 @@ public class ShopManager :MonoBehaviour
 
     private void SetupCardPacksManager()
     {
+        CardPacksManager.instance.ChangeBackgroundToOpen();
         CardPacksManager.instance.SetupPacks(this._packMaterials);
         CardPacksManager.instance.StartPackOpeningPhase();
 
