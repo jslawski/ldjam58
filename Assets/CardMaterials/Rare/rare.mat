@@ -289,7 +289,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Base_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Border_Holo_Direction: {r: 1, g: 1, b: 0, a: 0}
-    - _Color: {r: 1, g: 0.752108, b: 0, a: 1}
+    - _Color: {r: 0.8616352, g: 0.6788844, b: 0.12192939, a: 1}
     - _Dissolve_Edge_Color: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Holo_Color_1_TileOffset: {r: 1, g: 1, b: 0, a: 0}
