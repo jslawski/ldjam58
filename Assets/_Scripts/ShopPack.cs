@@ -1,23 +1,13 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using TMPro;
 
-public class SummaryCard : MonoBehaviour
+public class ShopPack : MonoBehaviour
 {
-    private Transform _rootTransform;
-    private Vector3 _originalPosition = Vector3.zero;
-    private Vector3 _showcasePosition = new Vector3(0.0f, 0.0f, -6.0f);
-
-    private Vector3 _dragScale = new Vector3(1.2f, 1.2f, 1.2f);
-
     [SerializeField]
-    private Renderer _cardRenderer;
-    [SerializeField]
-    private TextMeshProUGUI _moneyValueLabel;
-    [SerializeField]
-    private TextMeshProUGUI _happyValueLabel;
+    private SkinnedMeshRenderer _packRenderer;
 
     [SerializeField]
     private LayerMask _colliderLayerMask;
@@ -26,21 +16,21 @@ public class SummaryCard : MonoBehaviour
     private LayerMask _bucketLayerMask;
 
     [SerializeField]
-    private ParticleSystem _rareParticles;
-    [SerializeField]
-    private ParticleSystem _ultraRareParticles;
+    private TextMeshProUGUI _priceLabel;
+
+    private Material[] _allPackMaterials;
+
+    private Transform _rootTransform;
+    private Vector3 _originalPosition = Vector3.zero;
 
     private Ray _mouseRay;
-
-    public TradingCardAttributes cardAttributes;
-
     private MouseLooker _mouseLooker;
+
+    private Vector3 _dragScale = new Vector3(3.0f, 3.0f, 3.0f);
 
     private RaycastHit _hitInfo;
 
     private bool _isDragging = false;
-
-    public bool _isShowcasing = false;
 
     private float _minDragThreshold = 0.1f;
 
@@ -50,20 +40,45 @@ public class SummaryCard : MonoBehaviour
 
     private RedeemBucket _highlightedRedeemBucket;
 
-    public bool redeemed = false;
+    private int _minPackPrice = 100;
 
-    private int _packNum = 0;
-    private int _cardNum = 0;
+    private int _maxPackPrice = 200;
+
+    public int packPrice = 100;
+
+    private WalletBucket _playerWallet;
 
     private Vector3 _originalScale;
 
     private void Awake()
     {
+        this._allPackMaterials = Resources.LoadAll<Material>("PackWrappers");
         this._mouseLooker = GetComponent<MouseLooker>();
         this._rootTransform = GetComponent<Transform>();
 
+        this._playerWallet = GameObject.Find("WalletBucket").GetComponent<WalletBucket>();
+
         this._originalScale = this._rootTransform.localScale;
-    }    
+    }
+
+    private void Start()
+    {
+        int randomIndex = Random.Range(0, this._allPackMaterials.Length);
+        this._packRenderer.material = this._allPackMaterials[randomIndex];
+
+        this.packPrice = this.GetRandomPackPrice();
+
+        this._priceLabel.text = "$" + this.packPrice.ToString();
+    }
+
+    private int GetRandomPackPrice()
+    { 
+        int randomPrice = Random.Range(this._minPackPrice, this._maxPackPrice + 1);
+
+        int reduction = randomPrice % 10; //Ensures that all prices are multiples of 10
+
+        return (randomPrice - reduction);
+    }
 
     void Update()
     {
@@ -72,7 +87,7 @@ public class SummaryCard : MonoBehaviour
         if (Physics.Raycast(this._mouseRay, out this._hitInfo, 100.0f, this._colliderLayerMask) == true)
         {
             if (this._hitInfo.collider.gameObject.name == this.gameObject.name)
-            {            
+            {
                 this._mouseLooker.EnableMouseLook();
             }
             else
@@ -92,12 +107,7 @@ public class SummaryCard : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0) == true)
         {
-            //Also check here if the card is over a bucket
-            if (this._isShowcasing == true)
-            {
-                this.ReturnCard();
-            }
-            else if (this._isDragging)
+            if (this._isDragging)
             {
                 if (this._highlightedRedeemBucket == null)
                 {
@@ -108,64 +118,36 @@ public class SummaryCard : MonoBehaviour
                     this.RedeemCard();
                 }
             }
-            else if (this.IsClickingCard() == true)
-            {
-                this.ShowcaseCard();
-            }            
         }
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (this._isShowcasing == false && this.IsClickingCard() == true && this._dragCoroutine == null)
+            if (this.IsClickingCard() == true && this._dragCoroutine == null)
             {
                 this._dragCoroutine = StartCoroutine(this.HandleDrag());
             }
         }
     }
 
-    private void ShowcaseCard()
+    private void RedeemCard()
     {
-        this._originalPosition = this._rootTransform.position;
-        this._rootTransform.DOMove(this._showcasePosition, 0.3f).SetEase(Ease.OutBack);
-        this._isShowcasing = true;
+        this.gameObject.GetComponent<Collider>().enabled = false;
 
-        if (cardAttributes.rarity == Rarity.Rare)
-        {
-            this._rareParticles.Play();
-        }
-        else if (cardAttributes.rarity == Rarity.UltraRare)
-        {
-            this._ultraRareParticles.Play();
-        }
+        StartCoroutine(this.RedeemAnimation());
+        
+        this._highlightedRedeemBucket.RevertBucket();
+
+        this._highlightedRedeemBucket = null;
+
+        ShopManager.instance.PurchasePack(this._packRenderer.material);
+        this._playerWallet.RemoveMoney(this.packPrice);
     }
 
     private void ReturnCard()
     {
         this._rootTransform.DOScale(this._originalScale, 0.2f).SetEase(Ease.OutBack);
         this._rootTransform.DOMove(this._originalPosition, 0.3f).SetEase(Ease.OutBack);
-        this._isShowcasing = false;
         this._isDragging = false;
-
-        this._rareParticles.Stop();
-        this._ultraRareParticles.Stop();
-    }
-
-    public void SetupCard(TradingCardAttributes cardAttributes, int packNum, int cardNum)
-    {       
-        this.gameObject.GetComponent<Collider>().enabled = true;
-        this._highlightedRedeemBucket = null;
-
-        this.cardAttributes = cardAttributes;
-
-        this._cardRenderer.material = this.cardAttributes.cardMaterial;
-        this._moneyValueLabel.text = this.cardAttributes.moneyValue.ToString();
-        this._happyValueLabel.text = this.cardAttributes.happyValue.ToString();
-
-        this._packNum = packNum;
-        this._cardNum = cardNum;
-
-        this._rareParticles.Stop();
-        this._ultraRareParticles.Stop();
     }
 
     public bool IsClickingCard()
@@ -177,14 +159,14 @@ public class SummaryCard : MonoBehaviour
             if (this._hitInfo.collider.gameObject.name == this.gameObject.name)
             {
                 return true;
-            }            
+            }
         }
 
         return false;
     }
 
     public IEnumerator HandleDrag()
-    { 
+    {
         //Wait for a drag to reach the theshold before changing the _isDragging flag
         Vector3 initialViewportPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         Vector3 currentViewportPosition = initialViewportPosition;
@@ -202,7 +184,6 @@ public class SummaryCard : MonoBehaviour
             this._originalPosition = this._rootTransform.position;
 
             this._isDragging = true;
-            this._isShowcasing = false;
 
             this._rootTransform.DOScale(this._dragScale, 0.2f).SetEase(Ease.OutBack);
         }
@@ -210,7 +191,7 @@ public class SummaryCard : MonoBehaviour
         while (Input.GetMouseButton(0) == true)
         {
             Vector3 adjustedMousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z);
-            
+
             Vector3 currentMouseWorldPosition = Camera.main.ScreenToWorldPoint(adjustedMousePosition);
             Vector3 targetPosition = new Vector3(currentMouseWorldPosition.x, currentMouseWorldPosition.y, this._originalPosition.z - 0.5f);
             float currentDistance = Vector3.Distance(this._rootTransform.position, targetPosition);
@@ -225,15 +206,25 @@ public class SummaryCard : MonoBehaviour
         this._dragCoroutine = null;
     }
 
+    private IEnumerator RedeemAnimation()
+    {
+        this._rootTransform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack);
+        this._rootTransform.DOMove(this._highlightedRedeemBucket.gameObject.transform.position, 0.2f);
+
+        yield return new WaitForSeconds(0.3f);
+
+        this._rootTransform.position = this._originalPosition;
+
+        this.gameObject.SetActive(false);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Bucket")
-        {        
+        if (other.tag == "Cart")
+        {
             this._highlightedRedeemBucket = other.gameObject.GetComponent<RedeemBucket>();
 
-            //Ignore redeem buckets that are completed bills
-            BillBucket potentialBill = this._highlightedRedeemBucket.GetComponent<BillBucket>();
-            if (potentialBill != null && potentialBill.currentStatus == BillStatus.Complete)
+            if (this._playerWallet.currentValue < this.packPrice)
             {
                 this._highlightedRedeemBucket = null;
                 return;
@@ -245,50 +236,11 @@ public class SummaryCard : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Bucket")
+        if (other.tag == "Cart")
         {
             this._highlightedRedeemBucket = other.gameObject.GetComponent<RedeemBucket>();
             this._highlightedRedeemBucket.RevertBucket();
             this._highlightedRedeemBucket = null;
         }
-    }
-
-    private void RedeemCard()
-    {    
-        this.gameObject.GetComponent<Collider>().enabled = false;
-
-        StartCoroutine(this.RedeemAnimation());
-
-        this._highlightedRedeemBucket.RedeemCardValue(this.cardAttributes.moneyValue, this.cardAttributes.happyValue);
-        this._highlightedRedeemBucket.RevertBucket();
-
-        CollectionBucket potentialCollection = this._highlightedRedeemBucket.GetComponent<CollectionBucket>();
-        if (potentialCollection != null)
-        {
-            CollectionManager.AddCardToCollection(this.cardAttributes);
-        }
-
-        this._highlightedRedeemBucket = null;
-
-        CardPacksManager.instance.cardRedemptionStatus[this._packNum][this._cardNum] = true;
-    }
-
-    private IEnumerator RedeemAnimation()
-    {
-        this._rootTransform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack);
-        this._rootTransform.DOMove(this._highlightedRedeemBucket.gameObject.transform.position, 0.2f);
-
-        yield return new WaitForSeconds(0.3f);
-
-        this._rootTransform.position = this._originalPosition;
-
-        CardSummaryManager.instance.IncrementRedeemedCardCount();
-
-        if (CardSummaryManager.instance.AllCardsRedeemed() == true)
-        {
-            CardSummaryManager.instance.TriggerEndDay();
-        }
-
-        this.gameObject.SetActive(false);
     }
 }

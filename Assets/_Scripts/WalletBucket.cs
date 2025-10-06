@@ -17,6 +17,8 @@ public class WalletBucket : RedeemBucket
     {
         this._initialScale = this._currentValueLabel.rectTransform.localScale;
         this._emphasizedScale = this._initialScale * 1.3f;
+
+        this.RedeemCardValue(300, 0);
     }
 
     public override void RedeemCardValue(int moneyValue, int happyValue)

@@ -23,7 +23,7 @@ public class RedeemBucket : MonoBehaviour
         this.DisplayBucket();
     }
 
-    public void DisplayBucket()
+    public virtual void DisplayBucket()
     {
         this.bucketTransform.localScale = Vector3.zero;        
         this.bucketTransform.DOScale(Vector3.one * 3.0f, 0.2f).SetEase(Ease.OutBack);
@@ -41,5 +41,5 @@ public class RedeemBucket : MonoBehaviour
         this.bucketTransform.DOScale(this._originalScale, 0.2f).SetEase(Ease.OutBack);
     }
 
-    public virtual void RedeemCardValue(int moneyValue, int happyValue) { }
+    public virtual void RedeemCardValue(int moneyValue, int happyValue) { }    
 }
