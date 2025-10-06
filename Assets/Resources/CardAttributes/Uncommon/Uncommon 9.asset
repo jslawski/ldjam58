@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Uncommon 9
   m_EditorClassIdentifier: 
   rarity: 1
-  cardMaterial: {fileID: 2100000, guid: 8df01d62116e76b47b609671bfdb15f2, type: 2}
+  cardMaterial: {fileID: 2100000, guid: 95770ec3775a3fc4ab588e063b7457dc, type: 2}
   moneyValue: 500
   happyValue: 400

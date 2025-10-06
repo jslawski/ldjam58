@@ -26,7 +26,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3924107462932706879}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.05}
+  m_LocalPosition: {x: 0, y: 0, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.4, y: -0.735}
-  m_SizeDelta: {x: 0.63, y: 0.4687}
+  m_AnchoredPosition: {x: 0.426, y: -0.48002}
+  m_SizeDelta: {x: 0.5193, y: 0.3863}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4524178262606607360
 CanvasRenderer:
@@ -65,17 +65,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 1000
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fc36f521e13f89c4498c4182d9f98ba7, type: 2}
+  m_sharedMaterial: {fileID: 3530293079583303292, guid: fc36f521e13f89c4498c4182d9f98ba7,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4290016000
-  m_fontColor: {r: 0, g: 0.44955578, b: 0.7075472, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -92,10 +93,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.3
-  m_fontSizeBase: 36
+  m_fontSize: 0.2
+  m_fontSizeBase: 0.2
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 0.0001
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -206,8 +207,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _cardRenderer: {fileID: 6835637484008283503}
-  _moneyValueLabel: {fileID: 7361845242087067298}
-  _happyValueLabel: {fileID: 553925140612147504}
+  _moneyValueLabel: {fileID: 553925140612147504}
+  _happyValueLabel: {fileID: 7361845242087067298}
   _rareParticles: {fileID: 4950865605932595598}
   _ultraRareParticles: {fileID: 900160299650743871}
   cardAttributes: {fileID: 0}
@@ -256,7 +257,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6236106490214327886}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.05}
+  m_LocalPosition: {x: 0, y: 0, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -264,8 +265,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.4, y: -0.735}
-  m_SizeDelta: {x: 0.63, y: 0.4687}
+  m_AnchoredPosition: {x: -0.282, y: -0.48008}
+  m_SizeDelta: {x: 0.5193, y: 0.3863}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2915516779975652742
 CanvasRenderer:
@@ -295,17 +296,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 1000
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fc36f521e13f89c4498c4182d9f98ba7, type: 2}
+  m_sharedMaterial: {fileID: 3530293079583303292, guid: fc36f521e13f89c4498c4182d9f98ba7,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279288576
-  m_fontColor: {r: 0, g: 0.764151, b: 0.063577525, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -322,10 +324,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.3
-  m_fontSizeBase: 36
+  m_fontSize: 0.2
+  m_fontSizeBase: 0.2
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 0.0001
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -639,7 +641,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 00a14aabecd8ef54898e62879fa298f1, type: 2}
+      objectReference: {fileID: 2100000, guid: 8fd38f4c5aedc2b47bd677b4a8bbc3e7, type: 2}
     - target: {fileID: 919132149155446097, guid: 05abb43ddbce23d4a893f96c0a4c7e88,
         type: 3}
       propertyPath: m_Name
