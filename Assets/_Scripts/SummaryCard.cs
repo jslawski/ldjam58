@@ -238,6 +238,12 @@ public class SummaryCard : MonoBehaviour
         this._highlightedRedeemBucket.RedeemCardValue(this.cardAttributes.moneyValue, this.cardAttributes.happyValue);
         this._highlightedRedeemBucket.RevertBucket();
 
+        CollectionBucket potentialCollection = this._highlightedRedeemBucket.GetComponent<CollectionBucket>();
+        if (potentialCollection != null)
+        {
+            CollectionManager.AddCardToCollection(this.cardAttributes);
+        }
+
         this._highlightedRedeemBucket = null;
 
         CardPacksManager.instance.cardRedemptionStatus[this._packNum][this._cardNum] = true;

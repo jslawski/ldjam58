@@ -22,8 +22,6 @@ public class BillBucket : RedeemBucket
     [SerializeField]
     private TextMeshProUGUI _billTitle;
     [SerializeField]
-    private TextMeshProUGUI _targetValueLabel;
-    [SerializeField]
     private TextMeshProUGUI _currentValueLabel;
     [SerializeField]
     private TextMeshProUGUI _daysRemainingLabel;
@@ -40,11 +38,11 @@ public class BillBucket : RedeemBucket
         this.currentValue = 0;
         this.daysRemaining = billAttributes.daysToComplete;
         this.currentStatus = BillStatus.Active;
+        this.currentValue = this.billAttributes.targetAmount;
 
         this._billImage.sprite = this.billAttributes.billImage;
         this._billTitle.text = this.billAttributes.title;
-        this._targetValueLabel.text = "$" + this.billAttributes.targetAmount.ToString();
-        this._currentValueLabel.text = "$" + this.currentValue.ToString();
+        this._currentValueLabel.text = "$" + this.billAttributes.targetAmount.ToString();
         this._daysRemainingLabel.text = this.daysRemaining.ToString() + " Days Remaining...";
         this._punishmentValueLabel.text = "Punishment: -" + this.billAttributes.punishmentAmount.ToString() + " :(";
 
@@ -54,26 +52,33 @@ public class BillBucket : RedeemBucket
 
     public override void RedeemCardValue(int moneyValue, int happyValue)
     {
-        this.currentValue += moneyValue;
+        this.currentValue = this.currentValue - moneyValue;
+
+        int catchUpValue = this.currentValue + moneyValue;
+
+        if (this.currentValue < 0)
+        {
+            this.currentValue = 0;
+        }
 
         StopAllCoroutines();
-        StartCoroutine(this.IncrementToCurrentValue(this.currentValue - moneyValue));
+        StartCoroutine(this.DecrementToCurrentValue(catchUpValue));
 
-        if (this.currentValue >= this.billAttributes.targetAmount)
+        if (this.currentValue <= 0)
         {
             this.currentStatus = BillStatus.Complete;
         }
     }
 
-    private IEnumerator IncrementToCurrentValue(int catchUpValue)
+    private IEnumerator DecrementToCurrentValue(int catchUpValue)
     {        
-        int amountToIncrement = 5;        
+        int amountToDecrement = 5;        
 
         this._currentValueLabel.rectTransform.DOScale(this._emphasizedScale, 0.2f).SetEase(Ease.OutBack);
 
-        while (catchUpValue < this.currentValue)
+        while (catchUpValue > this.currentValue)
         {
-            catchUpValue += amountToIncrement;
+            catchUpValue -= amountToDecrement;
             this._currentValueLabel.text = "$" + catchUpValue.ToString();
             yield return new WaitForFixedUpdate();
         }

@@ -10,12 +10,21 @@ public class WalletBucket : RedeemBucket
     [SerializeField]
     private TextMeshProUGUI _currentValueLabel;
 
+    private Vector3 _initialScale;
+    private Vector3 _emphasizedScale;
+
+    private void Start()
+    {
+        this._initialScale = this._currentValueLabel.rectTransform.localScale;
+        this._emphasizedScale = this._initialScale * 1.3f;
+    }
+
     public override void RedeemCardValue(int moneyValue, int happyValue)
     {
         this.currentValue += moneyValue;
 
         StopAllCoroutines();
-        StartCoroutine(this.IncrementToCurrentValue());
+        StartCoroutine(this.IncrementToCurrentValue(this.currentValue - moneyValue));
     }
 
     public void RemoveMoney(int moneySpent)
@@ -23,44 +32,40 @@ public class WalletBucket : RedeemBucket
         this.currentValue -= moneySpent;
 
         StopAllCoroutines();
-        StartCoroutine(this.DecrementToCurrentValue());
+        StartCoroutine(this.DecrementToCurrentValue(this.currentValue + moneySpent));
     }
 
-    private IEnumerator IncrementToCurrentValue()
+    private IEnumerator IncrementToCurrentValue(int catchUpValue)
     {
-        int labelValue = Int32.Parse(this._currentValueLabel.text);
         int amountToIncrement = 5;
 
         Vector3 originalScale = this._currentValueLabel.rectTransform.localScale;
 
-        this._currentValueLabel.rectTransform.DOScale(this._currentValueLabel.rectTransform.localScale * 1.5f, 0.2f).SetEase(Ease.OutBack);
+        this._currentValueLabel.rectTransform.DOScale(this._emphasizedScale, 0.2f).SetEase(Ease.OutBack);
 
-        while (labelValue < this.currentValue)
+        while (catchUpValue < this.currentValue)
         {
-            labelValue += amountToIncrement;
-            this._currentValueLabel.text = labelValue.ToString();
+            catchUpValue += amountToIncrement;
+            this._currentValueLabel.text = "$" + catchUpValue.ToString();
             yield return new WaitForFixedUpdate();
         }
 
-        this._currentValueLabel.rectTransform.DOScale(originalScale, 0.2f).SetEase(Ease.OutBack);
+        this._currentValueLabel.rectTransform.DOScale(this._initialScale, 0.2f).SetEase(Ease.OutBack);
     }
 
-    private IEnumerator DecrementToCurrentValue()
+    private IEnumerator DecrementToCurrentValue(int catchUpValue)
     {
-        int labelValue = Int32.Parse(this._currentValueLabel.text);
         int amountToDecrement = 5;
 
-        Vector3 originalScale = this._currentValueLabel.rectTransform.localScale;
+        this._currentValueLabel.rectTransform.DOScale(this._emphasizedScale, 0.2f).SetEase(Ease.OutBack);
 
-        this._currentValueLabel.rectTransform.DOScale(this._currentValueLabel.rectTransform.localScale * 1.5f, 0.2f).SetEase(Ease.OutBack);
-
-        while (labelValue > this.currentValue)
+        while (catchUpValue > this.currentValue)
         {
-            labelValue -= amountToDecrement;
-            this._currentValueLabel.text = labelValue.ToString();
+            catchUpValue -= amountToDecrement;
+            this._currentValueLabel.text = "$" + catchUpValue.ToString();
             yield return new WaitForFixedUpdate();
         }
 
-        this._currentValueLabel.rectTransform.DOScale(originalScale, 0.2f).SetEase(Ease.OutBack);
+        this._currentValueLabel.rectTransform.DOScale(this._initialScale, 0.2f).SetEase(Ease.OutBack);
     }
 }
