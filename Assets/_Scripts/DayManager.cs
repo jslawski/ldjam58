@@ -100,6 +100,8 @@ public class DayManager : MonoBehaviour
             this.currentDay++;
 
             this._dayLabel.text = "Day " + this.currentDay.ToString();
+
+            MusicManager.instance.FadeToShopMusic();
         }
     }
 }

@@ -139,6 +139,8 @@ public class CardSummaryManager : MonoBehaviour
     {
         Debug.LogError("ALL CARDS REDEEMED, END OF DAY");
 
+        MusicManager.instance.FadeToEndOfDayMusic();
+
         StartCoroutine(this.StartEndOfDaySequence());
     }
 

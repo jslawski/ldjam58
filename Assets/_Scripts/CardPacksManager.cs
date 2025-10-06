@@ -127,6 +127,7 @@ public class CardPacksManager : MonoBehaviour
 
     public void SetupSummaryManager()
     {
+        MusicManager.instance.FadeToSummaryMusic();
         Instantiate(this._summaryManagerPrefab);
     }
 }
