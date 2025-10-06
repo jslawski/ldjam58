@@ -16,8 +16,6 @@ public class BillBucket : RedeemBucket
     public BillStatus currentStatus;
 
     [SerializeField]
-    private SpriteRenderer _billImage;
-    [SerializeField]
     private SpriteRenderer _completedStamp;
     [SerializeField]
     private TextMeshProUGUI _billTitle;
@@ -32,6 +30,12 @@ public class BillBucket : RedeemBucket
     private Vector3 _initialScale;
     private Vector3 _emphasizedScale;
 
+    public override void DisplayBucket()
+    {
+        this.bucketTransform.localScale = Vector3.zero;
+        this.bucketTransform.DOScale(Vector3.one * 8.5f, 0.2f).SetEase(Ease.OutBack);
+    }
+
     public void Setup(BillAttributes billAttributes)
     {
         this.billAttributes = billAttributes;
@@ -40,11 +44,10 @@ public class BillBucket : RedeemBucket
         this.currentStatus = BillStatus.Active;
         this.currentValue = this.billAttributes.targetAmount;
 
-        this._billImage.sprite = this.billAttributes.billImage;
         this._billTitle.text = this.billAttributes.title;
         this._currentValueLabel.text = "$" + this.billAttributes.targetAmount.ToString();
-        this._daysRemainingLabel.text = this.daysRemaining.ToString() + " Days Remaining...";
-        this._punishmentValueLabel.text = "Punishment: -" + this.billAttributes.punishmentAmount.ToString() + " :(";
+        this._daysRemainingLabel.text = this.daysRemaining.ToString();
+        this._punishmentValueLabel.text = "-" + this.billAttributes.punishmentAmount.ToString();
 
         this._initialScale = this._currentValueLabel.rectTransform.localScale;
         this._emphasizedScale = this._initialScale * 1.3f;
@@ -98,7 +101,7 @@ public class BillBucket : RedeemBucket
     public void DecrementBillDays()
     {
         this.daysRemaining -= 1;
-        this._daysRemainingLabel.text = this.daysRemaining.ToString() + " Days Remaining...";
+        this._daysRemainingLabel.text = this.daysRemaining.ToString();
 
         if (this.daysRemaining <= 0 && this.currentStatus == BillStatus.Active)
         {
