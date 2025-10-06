@@ -296,7 +296,7 @@ Material:
     - _Holo_Color_2_TileOffset: {r: 0.15, g: 0.15, b: 0, a: 0}
     - _Holo_Direction: {r: 0.92, g: 0.88, b: 0, a: 0}
     - _Holor_Color_2_TileOffset: {r: 0.15, g: 0.15, b: 0.01, a: 0}
-    - _Reflection_Color: {r: 0.5345911, g: 0.5345911, b: 0.5345911, a: 1}
+    - _Reflection_Color: {r: 0.47798735, g: 0.47648424, b: 0.47648424, a: 1}
     - _Reflection_Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
