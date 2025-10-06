@@ -49,7 +49,7 @@ public class DayManager : MonoBehaviour
     public void StartDayTransitionSequence()
     {
         this._dayTitleLabel.gameObject.SetActive(true);
-        this._dayTitleLabel.text = "End of Day " + this.currentDay.ToString();
+        this._dayTitleLabel.text = "Start of Day " + (this.currentDay + 1).ToString();
         this._happinessMeter.gameObject.SetActive(true);
         StartCoroutine(this.DayTransitionSequence());
     }
@@ -73,6 +73,8 @@ public class DayManager : MonoBehaviour
 
         this._happinessMeter.RemoveHealth(healthTax);
 
+        HappinessManager.instance.UpdateMeter();
+
         yield return new WaitForSeconds(2.0f);
 
         this._dayTitleLabel.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack);
@@ -81,6 +83,8 @@ public class DayManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         Instantiate(this._shopPrefab);
+
+        CardPacksManager.instance.ChangeBackgroundToStore();
 
         this._dayTitleLabel.gameObject.SetActive(false);
         this._happinessMeter.gameObject.SetActive(false);
