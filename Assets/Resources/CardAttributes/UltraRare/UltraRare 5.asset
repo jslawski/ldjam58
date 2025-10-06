@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 228b568220c454345b736cd39d197980, type: 3}
-  m_Name: Common
+  m_Name: UltraRare 5
   m_EditorClassIdentifier: 
-  cardMaterial: {fileID: 2100000, guid: 6167bdc2b30ee0a4da1143bb5d2a7343, type: 2}
-  moneyValue: 140
-  happyValue: 150
+  rarity: 3
+  cardMaterial: {fileID: 2100000, guid: bfeacc614eadf76448ccb951a415325f, type: 2}
+  moneyValue: 1300
+  happyValue: 3000

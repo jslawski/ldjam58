@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 228b568220c454345b736cd39d197980, type: 3}
   m_Name: Common 1
   m_EditorClassIdentifier: 
-  cardMaterial: {fileID: 2100000, guid: 162e4e0a0224b46479eb15efacfd2e0d, type: 2}
+  rarity: 0
+  cardMaterial: {fileID: 2100000, guid: e9185de017cf12c489279b2faa591240, type: 2}
   moneyValue: 200
   happyValue: 100

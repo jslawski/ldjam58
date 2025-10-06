@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 228b568220c454345b736cd39d197980, type: 3}
-  m_Name: Test2
+  m_Name: Common 10
   m_EditorClassIdentifier: 
-  rarity: 3
-  cardMaterial: {fileID: 2100000, guid: 2ce458b101788a347a635cbed140fa26, type: 2}
-  moneyValue: 200
-  happyValue: 100
+  rarity: 0
+  cardMaterial: {fileID: 2100000, guid: 1b190da64b7527f48bd94171b906d97e, type: 2}
+  moneyValue: 140
+  happyValue: 150
