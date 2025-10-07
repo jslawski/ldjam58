@@ -15,4 +15,4 @@ MonoBehaviour:
   title: Helium Tank Rental
   targetAmount: 500
   daysToComplete: 1
-  punishmentAmount: 150
+  punishmentAmount: 200

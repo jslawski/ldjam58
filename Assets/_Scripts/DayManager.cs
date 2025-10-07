@@ -22,8 +22,14 @@ public class DayManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _dayLabel;
 
-    private int _minHealthTax = 180;
-    private int _maxHealthTax = 280;
+    private int _easyMinHealthTax = 180;
+    private int _easyMaxHealthTax = 280;
+
+    private int _medMinHealthTax = 250;
+    private int _medMaxHealthTax = 350;
+
+    private int _hardMinHealthTax = 300;
+    private int _hardMaxHealthTax = 350;
 
     private Vector3 _labelInitialScale;
 
@@ -48,7 +54,20 @@ public class DayManager : MonoBehaviour
 
     private int GetRandomHealthTax()
     {
-        int randomPrice = Random.Range(this._minHealthTax, this._maxHealthTax + 1);
+        int randomPrice = 0;
+
+        if (this.currentDay < 5)
+        {
+            randomPrice = Random.Range(this._easyMinHealthTax, this._easyMaxHealthTax + 1);
+        }
+        else if (this.currentDay < 10)
+        {
+            randomPrice = Random.Range(this._medMinHealthTax, this._medMaxHealthTax + 1);
+        }
+        else
+        {
+            randomPrice = Random.Range(this._hardMinHealthTax, this._hardMaxHealthTax + 1);
+        }
 
         int reduction = randomPrice % 10; //Ensures that all prices are multiples of 10
 

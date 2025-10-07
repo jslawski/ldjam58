@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Daughter's Orphanage Bills
   targetAmount: 2550
-  daysToComplete: 5
+  daysToComplete: 4
   punishmentAmount: 600

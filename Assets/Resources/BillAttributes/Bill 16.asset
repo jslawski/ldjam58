@@ -15,4 +15,4 @@ MonoBehaviour:
   title: Speed Dating Service
   targetAmount: 800
   daysToComplete: 2
-  punishmentAmount: 100
+  punishmentAmount: 200

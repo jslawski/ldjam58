@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Mafia Dues
   targetAmount: 1600
-  daysToComplete: 5
+  daysToComplete: 3
   punishmentAmount: 1000
