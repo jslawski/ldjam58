@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 22
   m_EditorClassIdentifier: 
   title: Deep Sea Scuba Lessons
-  targetAmount: 100
-  daysToComplete: 1
-  punishmentAmount: 200
+  targetAmount: 1200
+  daysToComplete: 3
+  punishmentAmount: 400

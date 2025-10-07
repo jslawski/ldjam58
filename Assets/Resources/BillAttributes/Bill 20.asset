@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Blue Team Membership
   targetAmount: 500
-  daysToComplete: 4
+  daysToComplete: 2
   punishmentAmount: 500

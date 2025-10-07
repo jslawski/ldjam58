@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 11
   m_EditorClassIdentifier: 
   title: Wife
-  targetAmount: 150
+  targetAmount: 700
   daysToComplete: 1
-  punishmentAmount: 50
+  punishmentAmount: 300

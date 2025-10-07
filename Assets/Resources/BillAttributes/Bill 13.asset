@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 13
   m_EditorClassIdentifier: 
   title: Cheerleader Camp
-  targetAmount: 150
-  daysToComplete: 2
-  punishmentAmount: 200
+  targetAmount: 1500
+  daysToComplete: 3
+  punishmentAmount: 400

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 3
   m_EditorClassIdentifier: 
   title: Mafia Dues
-  targetAmount: 1500
+  targetAmount: 1600
   daysToComplete: 5
   punishmentAmount: 1000

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 12
   m_EditorClassIdentifier: 
   title: Virus Removal Gift Cards
-  targetAmount: 200
+  targetAmount: 900
   daysToComplete: 3
-  punishmentAmount: 50
+  punishmentAmount: 300

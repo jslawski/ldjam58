@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 6
   m_EditorClassIdentifier: 
   title: Ice Cream Loan
-  targetAmount: 50
+  targetAmount: 600
   daysToComplete: 1
-  punishmentAmount: 20
+  punishmentAmount: 100

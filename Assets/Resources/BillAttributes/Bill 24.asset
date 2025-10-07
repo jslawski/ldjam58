@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 24
   m_EditorClassIdentifier: 
   title: Utilities
-  targetAmount: 700
+  targetAmount: 800
   daysToComplete: 2
-  punishmentAmount: 250
+  punishmentAmount: 300

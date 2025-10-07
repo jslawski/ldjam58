@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 16
   m_EditorClassIdentifier: 
   title: Speed Dating Service
-  targetAmount: 200
+  targetAmount: 800
   daysToComplete: 2
   punishmentAmount: 100

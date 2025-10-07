@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 17
   m_EditorClassIdentifier: 
   title: Masseuse School Loans
-  targetAmount: 150
+  targetAmount: 600
   daysToComplete: 2
-  punishmentAmount: 50
+  punishmentAmount: 100

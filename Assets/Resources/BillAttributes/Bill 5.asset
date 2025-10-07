@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 5
   m_EditorClassIdentifier: 
   title: Lasik Surgery Bill
-  targetAmount: 1100
-  daysToComplete: 3
+  targetAmount: 1000
+  daysToComplete: 2
   punishmentAmount: 300

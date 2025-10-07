@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 14
   m_EditorClassIdentifier: 
   title: Grandma's Will Forgery
-  targetAmount: 100
+  targetAmount: 500
   daysToComplete: 1
   punishmentAmount: 200

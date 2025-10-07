@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 4
   m_EditorClassIdentifier: 
   title: Car Insurance
-  targetAmount: 100
+  targetAmount: 400
   daysToComplete: 1
-  punishmentAmount: 100
+  punishmentAmount: 150

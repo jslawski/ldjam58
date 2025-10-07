@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 15
   m_EditorClassIdentifier: 
   title: Lasso Lessons
-  targetAmount: 100
+  targetAmount: 600
   daysToComplete: 2
-  punishmentAmount: 50
+  punishmentAmount: 200

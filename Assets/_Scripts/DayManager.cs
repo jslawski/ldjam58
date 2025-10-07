@@ -22,8 +22,8 @@ public class DayManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _dayLabel;
 
-    private int _minHealthTax = 50;
-    private int _maxHealthTax = 150;
+    private int _minHealthTax = 180;
+    private int _maxHealthTax = 280;
 
     private Vector3 _labelInitialScale;
 

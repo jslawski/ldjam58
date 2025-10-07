@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Sandwich Insurance
   targetAmount: 600
-  daysToComplete: 3
-  punishmentAmount: 50
+  daysToComplete: 2
+  punishmentAmount: 300

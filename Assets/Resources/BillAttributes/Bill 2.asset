@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 2
   m_EditorClassIdentifier: 
   title: Hospital Fees
-  targetAmount: 1000
+  targetAmount: 1200
   daysToComplete: 3
   punishmentAmount: 300

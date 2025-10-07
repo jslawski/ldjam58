@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Student Loans
   targetAmount: 1250
-  daysToComplete: 4
-  punishmentAmount: 200
+  daysToComplete: 3
+  punishmentAmount: 300

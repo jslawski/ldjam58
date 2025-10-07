@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bill 18
   m_EditorClassIdentifier: 
   title: Helium Tank Rental
-  targetAmount: 100
+  targetAmount: 500
   daysToComplete: 1
-  punishmentAmount: 50
+  punishmentAmount: 150

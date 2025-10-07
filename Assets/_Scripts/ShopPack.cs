@@ -40,9 +40,9 @@ public class ShopPack : MonoBehaviour
 
     private RedeemBucket _highlightedRedeemBucket;
 
-    private int _minPackPrice = 50;
+    private int _minPackPrice = 70;
 
-    private int _maxPackPrice = 120;
+    private int _maxPackPrice = 180;
 
     public int packPrice = 50;
 

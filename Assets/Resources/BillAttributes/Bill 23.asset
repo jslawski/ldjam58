@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Rent
   targetAmount: 2400
-  daysToComplete: 5
+  daysToComplete: 4
   punishmentAmount: 400
